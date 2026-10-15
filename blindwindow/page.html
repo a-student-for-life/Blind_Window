@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blind Window</title>
+<style>
+:root{
+  --bg:#f6f5f1;--panel:#ffffff;--ink:#1d2124;--muted:#5f676d;--line:#dcdad3;
+  --water:#1f6f8b;--water-soft:#cfe3ea;--sar:#7a4fb3;--usable:#2e7d4f;--cloudy:#b4552d;
+  --unknown:#8a8f94;--peak:#c2410c;--band:#fde7d6;--accent:#0f4c5c;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121518;--panel:#1b2024;--ink:#e8eaec;--muted:#9aa3aa;--line:#2e353b;
+  --water:#5fb3cf;--water-soft:#1f3a45;--sar:#b394e6;--usable:#5cc189;--cloudy:#e48a62;
+  --unknown:#7d858c;--peak:#fb923c;--band:#3a2a1f;--accent:#7cc4d6;}}
+:root[data-theme="dark"]{
+  --bg:#121518;--panel:#1b2024;--ink:#e8eaec;--muted:#9aa3aa;--line:#2e353b;
+  --water:#5fb3cf;--water-soft:#1f3a45;--sar:#b394e6;--usable:#5cc189;--cloudy:#e48a62;
+  --unknown:#7d858c;--peak:#fb923c;--band:#3a2a1f;--accent:#7cc4d6;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
+header h1{font-size:28px;margin:0;letter-spacing:-.01em}
+header p{margin:4px 0 0;color:var(--muted);max-width:760px}
+.meta{font-size:13px;color:var(--muted);margin-top:8px}
+nav{display:flex;gap:4px;margin:20px 0 16px;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap}
+nav button{background:none;border:0;padding:10px 14px;font:inherit;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
+nav button.on{color:var(--ink);border-color:var(--accent);font-weight:600}
+section{display:none}section.on{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px}
+.card h3{margin:0;font-size:17px}
+.sub{color:var(--muted);font-size:13px}
+.row{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0}
+.stat{min-width:140px}.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.big{color:var(--peak)}
+.warn{border-left:3px solid var(--cloudy);padding:8px 12px;background:var(--bg);border-radius:4px;font-size:14px;margin:8px 0}
+.note{font-size:13px;color:var(--muted)}
+.chart{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.chart svg{width:100%;min-width:640px;height:auto;display:block}
+svg text{fill:var(--muted);font-size:11px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:6px 0 4px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+details{margin-top:10px}summary{cursor:pointer;color:var(--accent);font-size:14px}
+pre{background:var(--bg);padding:10px;border-radius:6px;overflow:auto;font-size:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.chips button{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}
+.chips button.on{background:var(--accent);color:var(--panel);border-color:var(--accent)}
+input[type=range]{width:100%}
+.obs{list-style:none;padding:0;margin:8px 0}.obs li{padding:5px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid currentColor;margin-right:6px}
+.ok{color:var(--usable)}.bad{color:var(--cloudy)}.na{color:var(--unknown)}
+@media (max-width:600px){.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{min-width:0}.stat b{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Blind Window</h1>
+  <p>When will public satellites next give a usable view of a forecast flood reach, where do gaps remain, and what observation request could a planner consider?</p>
+  <div class="meta" id="meta"></div>
+</header>
+<nav>
+  <button data-tab="outlook" class="on">Live outlook</button>
+  <button data-tab="replay">Replay: Brahmaputra, July 2024</button>
+  <button data-tab="evidence">Evidence and limits</button>
+</nav>
+
+<section id="outlook" class="on"></section>
+
+<section id="replay">
+  <div class="card">
+    <h3>What the system would have said before the July 2024 Brahmaputra peak</h3>
+    <div class="sub">GloFAS cell 26.175 N, 91.725 E near Guwahati. Pick a forecast issue date, then drag the slider to reveal what actually happened.</div>
+    <div class="chips" id="issueChips"></div>
+    <div class="row" id="replayStats"></div>
+    <div class="legend" id="replayLegend"></div>
+    <div id="replayChart"></div>
+    <label class="note" for="asof">Revealed up to: <b id="asofLabel"></b></label>
+    <input type="range" id="asof" min="0" max="20" value="0">
+    <ul class="obs" id="obsList"></ul>
+    <div class="note" id="ensNote"></div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="card">
+    <h3>How the rule did on the three cached 2024 events</h3>
+    <div class="sub">Error = predicted first usable pass minus observed first usable observation (hours). Negative means the prediction was too early. One event is fully validated.</div>
+    <table id="score"></table>
+  </div>
+  <div class="card">
+    <h3>Where it breaks: Godavari, July 2024</h3>
+    <p>A Sentinel-1 image with a valid pixel at the point arrived about 30 minutes after the peak (2024-07-27 00:31 UTC), but no loaded ESA plan file listed a pass then. Planned coverage pointed to 3 August, so the cloud-aware rule was about 168 hours too pessimistic. Planned passes are therefore a lower bound on what satellites will actually collect.</p>
+  </div>
+  <div class="card">
+    <h3>Limits</h3>
+    <ul>
+      <li>Validated on one event (Guwahati). Godavari is a failure case, Ganges is provisional (footprint only, no pixel check).</li>
+      <li>Ensemble numbers are a member spread, not calibrated probabilities.</li>
+      <li>Plan files are the latest published; whether they were available as of the issue date is not verified. Beyond a plan file's end, passes are projected from the repeat cycle and marked as projected.</li>
+      <li>Cloud is a point forecast from Open-Meteo (16 days max). Scene cloud in the replay is whole-scene, not cloud over the river. The 30% cutoff is a fixed rule.</li>
+      <li>"Usable" means a planned pass with a chance of a valid view; it does not mean flooding will be detected.</li>
+      <li>GloFAS suits large rivers. Flash and urban floods are out of scope. Discharge is modelled, not measured.</li>
+      <li>Population and hospitals are nearby context, not people or facilities affected.</li>
+      <li>Landsat is not included in the live outlook (its public calendar gives dates, not pass times).</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Related work</h3>
+    <p class="note">Forecast-driven satellite planning is not new: the EFAS pre-tasking workflow was developed from 2016 and integrated into EFAS operations in April 2022; a 2013 paper used hydrological forecasts to prioritise acquisitions; NRSC's PLANNeR portal supports acquisition requests in India. Blind Window is a transparent, per-reach view of public-pass gaps that sits alongside these, and its brief is a draft for a planner to review, never a submitted request.</p>
+  </div>
+</section>
+
+<div class="note" style="margin-top:24px">Data: GloFAS via Open-Meteo Flood API and CEMS EWDS; ESA Sentinel acquisition plans; Open-Meteo / ECMWF cloud forecasts; Copernicus GFM; GHS-POP; OpenStreetMap contributors. GloFAS is informational, not an official warning.</div>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const H = 3600e3, D = 24*H;
+const fmt = t => new Date(t).toISOString().replace('T',' ').slice(0,16)+' UTC';
+const fday = t => new Date(t).toISOString().slice(5,10);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const days = h => h == null ? '—' : (h/24).toFixed(1)+' d';
+
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('nav button,section').forEach(e => e.classList.remove('on'));
+  b.classList.add('on'); $('#'+b.dataset.tab).classList.add('on');
+});
+
+const LEG = `<span><i style="background:var(--sar)"></i>Sentinel-1 radar</span>
+<span><i style="background:var(--usable)"></i>optical, clear forecast</span>
+<span><i style="background:var(--cloudy)"></i>optical, cloudy forecast</span>
+<span><i style="background:var(--unknown)"></i>optical, no cloud forecast</span>
+<span><i style="border:2px solid var(--muted);background:none"></i>projected (not in plan file)</span>
+<span><i style="background:var(--band);border-radius:2px"></i>ensemble peak range</span>`;
+
+// generic timeline: x axis = time, markers for passes, peak line, band, optional series
+function timeline({start, end, band, peak, passes=[], obs=[], series=null, pick=null}){
+  const W=960, Hh=series?240:120, L=36, R=12, top=12, axis=Hh-22;
+  const x = t => L + (W-L-R)*(t-start)/(end-start);
+  let s = `<div class="chart"><svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="timeline">`;
+  for(let t=Math.ceil(start/D)*D; t<=end; t+=D){
+    const lab = Math.round((t-Math.ceil(start/D)*D)/D)%3===0;
+    s += `<line x1="${x(t)}" x2="${x(t)}" y1="${top}" y2="${axis}" stroke="var(--line)" stroke-width="${lab?1:.4}"/>`;
+    if(lab) s += `<text x="${x(t)}" y="${Hh-6}" text-anchor="middle">${fday(t)}</text>`;
+  }
+  if(band) s += `<rect x="${x(band[0])}" y="${top}" width="${Math.max(2,x(band[1])-x(band[0]))}" height="${axis-top}" fill="var(--band)"/>`;
+  let laneY = axis-24;
+  if(series){
+    const vs=series.v.filter(v=>v!=null), mx=Math.max(...vs)*1.08;
+    const y=v=> top+ (axis-60-top)*(1-v/mx);
+    let p='';series.t.forEach((t,i)=>{ if(t<start||t>end||series.v[i]==null) return; p+=(p?'L':'M')+x(t).toFixed(1)+','+y(series.v[i]).toFixed(1);});
+    s += `<path d="${p}" fill="none" stroke="var(--water)" stroke-width="2"/>`;
+    if(series.thr) s += `<line x1="${L}" x2="${W-R}" y1="${y(series.thr)}" y2="${y(series.thr)}" stroke="var(--water)" stroke-dasharray="4 4" opacity=".6"/><text x="${L+4}" y="${y(series.thr)-4}">2-year threshold</text>`;
+    s += `<text x="${L+4}" y="${top+10}">discharge (m³/s), max ${Math.round(Math.max(...vs)).toLocaleString()}</text>`;
+    laneY = axis-30;
+  }
+  if(peak) s += `<line x1="${x(peak)}" x2="${x(peak)}" y1="${top}" y2="${axis}" stroke="var(--peak)" stroke-width="2"/><text x="${x(peak)+4}" y="${top+(series?24:10)}" style="fill:var(--peak)">forecast peak</text>`;
+  if(pick) s += `<line x1="${x(peak)}" x2="${x(pick)}" y1="${laneY-16}" y2="${laneY-16}" stroke="var(--peak)" stroke-width="3" opacity=".55"/><text x="${(x(peak)+x(pick))/2}" y="${laneY-21}" text-anchor="middle" style="fill:var(--peak)">blind window</text>`;
+  for(const p of passes){
+    if(p.time<start||p.time>end) continue;
+    const c = p.kind==='sar'?'var(--sar)':({usable:'var(--usable)',cloudy:'var(--cloudy)'}[p.status]||'var(--unknown)');
+    const proj = p.source==='projected';
+    const shape = p.kind==='sar'
+      ? `<path d="M${x(p.time)},${laneY-7} l7,13 h-14z" fill="${proj?'none':c}" stroke="${c}" stroke-width="2"/>`
+      : `<circle cx="${x(p.time)}" cy="${laneY}" r="6" fill="${proj?'none':c}" stroke="${c}" stroke-width="2"/>`;
+    s += `<g><title>${esc(p.satellite)} ${fmt(p.time)}${p.cloud_pct!=null?' · cloud '+p.cloud_pct+'%':''}${proj?' · projected':''}</title>${shape}</g>`;
+  }
+  for(const o of obs){
+    const c = {valid_not_flooded:'var(--usable)', flooded:'var(--water)'}[o.state] || 'var(--unknown)';
+    s += `<g><title>${esc(o.source)}: ${esc(o.note)}</title><rect x="${x(o.time)-5}" y="${axis-10}" width="10" height="10" fill="${c}" ${o.state==='valid_not_flooded'?'':'opacity=".55"'}/></g>`;
+  }
+  return s+'</svg></div>';
+}
+
+/* ---------- live outlook ---------- */
+function outlook(){
+  const el=$('#outlook'), snap=DATA.snapshot;
+  if(!snap){ el.innerHTML='<div class="card warn">No live snapshot yet. Run <code>python -m blindwindow.run</code> with internet access.</div>'; return; }
+  $('#meta').textContent = 'Issued '+fmt(snap.issued_at)+' · plan files: '+(snap.plans||[]).map(p=>p.satellite+(p.error?' (failed)':'')).join(', ');
+  let html = `<div class="legend">${LEG}</div>`;
+  for(const r of snap.points){
+    html += `<div class="card"><h3>${esc(r.name)}</h3>`;
+    const sn=r.snap||{};
+    if(sn.lat!=null) html += `<div class="sub">GloFAS cell ${sn.lat}, ${sn.lon} (snapped from ${r.seed.join(', ')}; ${sn.model||''} max ${Math.round(sn.snap_max_m3s||0).toLocaleString()} m³/s in ${sn.window?sn.window.join(' to '):''})</div>`;
+    for(const e of r.errors||[]) html += `<div class="warn">${esc(e)}</div>`;
+    const res=r.result, fc=r.forecast;
+    if(!res){ html+='</div>'; continue; }
+    const peak=Date.parse(res.peak_instant), aware=res.cloud_aware, naive=res.naive;
+    const sp=r.member_spread_h;
+    html += `<div class="row">
+      <div class="stat"><span>Forecast peak day</span><b>${fc.peak_date}</b><div class="sub">${fc.peak_m3s!=null?Math.round(fc.peak_m3s).toLocaleString()+' m³/s':''}</div></div>
+      <div class="stat"><span>Member peak range</span><b>${fc.member_peak_min?fday(fc.member_peak_min)+' to '+fday(fc.member_peak_max):'—'}</b><div class="sub">${(fc.members||[]).length} members</div></div>
+      <div class="stat"><span>Next usable view</span><b class="big">${aware?days(aware.lag_h):'beyond horizon'}</b><div class="sub">${aware?esc(aware.satellite)+' '+fmt(aware.time)+(aware.source==='projected'?' (projected)':''):'no usable pass found'}</div></div>
+      <div class="stat"><span>Naive next pass</span><b>${naive?days(naive.lag_h):'—'}</b><div class="sub">${naive?esc(naive.satellite)+(naive.cloud_pct!=null?', cloud '+naive.cloud_pct+'%':''):''}</div></div>
+      <div class="stat"><span>Blind window across members</span><b>${sp?days(sp.p25)+'–'+days(sp.p75):'—'}</b><div class="sub">${sp?'middle half of '+sp.n+' members':''}${r.members_beyond_horizon?' · '+r.members_beyond_horizon+' beyond horizon':''}</div></div>
+    </div>`;
+    const passes=(r.all_passes||[]).map(p=>{const t=Date.parse(p.time); const st=p.kind==='sar'?'usable':(p.cloud_pct==null?'unknown':(p.cloud_pct<30?'usable':'cloudy')); return {...p,time:t,status:st};});
+    const start=Date.parse(snap.issued_at), end=start+32*D;
+    const band=fc.member_peak_min?[Date.parse(fc.member_peak_min), Date.parse(fc.member_peak_max)+D]:null;
+    const series={t:fc.dates.map(d=>Date.parse(d)+D/2), v:fc.central&&fc.central.some(v=>v!=null)?fc.central:null};
+    html += timeline({start,end,band,peak,passes,series:series.v?series:null,pick:aware?Date.parse(aware.time):null});
+    if(res.unresolved_optical_before) html+=`<div class="note">${res.unresolved_optical_before} optical pass(es) before it have no cloud forecast yet (more than 16 days out), so they are not counted as usable.</div>`;
+    if(r.brief) html += `<details><summary>Draft acquisition brief (not submitted)</summary><pre>${esc(JSON.stringify(r.brief,null,2))}</pre></details>`;
+    html += '</div>';
+  }
+  el.innerHTML = html;
+}
+
+/* ---------- replay ---------- */
+function replay(){
+  const ev = DATA.replay.events.find(e=>e.id==='guwahati'); if(!ev) return;
+  const S = DATA.series;
+  const start=Date.parse('2024-06-24T00:00:00Z'), end=Date.parse('2024-07-14T00:00:00Z');
+  const issues = ev.forecasts; let cur = 0;
+  $('#issueChips').innerHTML = issues.map((f,i)=>`<button data-i="${i}" class="${i===0?'on':''}">Issued ${f.issued} (${f.lead_days} d ahead)</button>`).join('');
+  $('#replayLegend').innerHTML = LEG.split('</span>').slice(0,4).join('</span>')+'</span><span><i style="background:var(--usable);border-radius:2px"></i>valid image at point</span><span><i style="background:var(--unknown);border-radius:2px"></i>image unusable at point</span>';
+  const slider=$('#asof'); slider.max = Math.round((end-start)/D);
+  function draw(){
+    const f = issues[cur], issued=Date.parse(f.issued+'T00:00:00Z'), peak=Date.parse(f.peak_instant);
+    const asof = start + (+slider.value)*D;
+    $('#asofLabel').textContent = new Date(asof).toISOString().slice(0,10);
+    // cloud forecast available at this issue date: lead = days from issue to pass, capped at the longest archived lead (5)
+    const passes = ev.planned_passes.map(p=>{
+      const t=Date.parse(p.time); let c=null, lead=null;
+      if(p.kind==='optical'){ lead=Math.min(5,Math.max(1,Math.ceil((t-issued)/D))); c=p.cloud_forecast_by_lead[String(lead)]; }
+      const st=p.kind==='sar'?'usable':(c==null?'unknown':(c<30?'usable':'cloudy'));
+      return {...p,time:t,cloud_pct:c,status:st,source:'planned'};
+    });
+    const after = passes.filter(p=>p.time>=peak).sort((a,b)=>a.time-b.time);
+    const naive=after[0], aware=after.find(p=>p.status==='usable');
+    const obs = ev.observations.map(o=>({...o,time:Date.parse(o.time)})).filter(o=>o.time<=asof);
+    const truth=Date.parse(ev.first_usable_observed);
+    const series = S?{t:S.dates.map(d=>Date.parse(d)+D/2), v:S.discharge_m3s.map((v,i)=>Date.parse(S.dates[i])+D/2<=asof?v:null), thr:ev.two_year_threshold_m3s}:null;
+    $('#replayChart').innerHTML = timeline({start,end,peak,passes,obs,series,pick:aware?aware.time:null});
+    const lag = t => ((t-peak)/H);
+    $('#replayStats').innerHTML = `
+      <div class="stat"><span>Forecast peak</span><b>${new Date(peak-D).toISOString().slice(0,10)}</b><div class="sub">daily mean ending ${fmt(peak)}, ${f.peak_m3s.toLocaleString()} m³/s</div></div>
+      <div class="stat"><span>Naive: next pass</span><b>${days(lag(naive.time))}</b><div class="sub">${naive.satellite}, forecast cloud ${naive.cloud_pct}%</div></div>
+      <div class="stat"><span>Blind Window: next usable</span><b class="big">${days(lag(aware.time))}</b><div class="sub">${aware.satellite} ${fmt(aware.time)}</div></div>
+      <div class="stat"><span>What happened</span><b>${asof>=truth?days(lag(truth)):'?'}</b><div class="sub">${asof>=truth?'first valid view '+fmt(truth):'drag the slider forward'}</div></div>`;
+    $('#obsList').innerHTML = obs.length? obs.map(o=>{const cls=o.state==='valid_not_flooded'?'ok':(o.state==='too_cloudy'?'bad':'na');const lab={valid_not_flooded:'valid, not flooded at point',too_cloudy:'too cloudy',no_valid_pixel:'no valid pixel'}[o.state]||o.state;return `<li><span class="pill ${cls}">${lab}</span>${fmt(o.time)} · ${esc(o.source)} · <span class="note">${esc(o.note)}</span></li>`}).join('') : '<li class="note">No observations revealed yet.</li>';
+    $('#ensNote').textContent = (ev.ensemble_notes||[]).map(n=>`Issued ${n.issued}: ${n.text} (EWDS valid-time labels).`).join(' ')+' Planned-pass availability as of the issue date is not verified.';
+  }
+  $('#issueChips').onclick = e => { const b=e.target.closest('button'); if(!b) return; cur=+b.dataset.i; document.querySelectorAll('#issueChips button').forEach(x=>x.classList.toggle('on',x===b)); draw(); };
+  slider.oninput = draw; draw();
+}
+
+/* ---------- evidence ---------- */
+function evidence(){
+  const rows = DATA.replay.scorecard.rows, f=v=>(v>0?'+':'')+v.toFixed(1)+' h';
+  $('#score').innerHTML = `<tr><th>Event</th><th>Status</th><th>Naive, 5 d ahead</th><th>Naive, 1 d ahead</th><th>Cloud-aware, 5 d ahead</th><th>Cloud-aware, 1 d ahead</th></tr>`+
+    rows.map(r=>`<tr><td>${esc(r.event)}</td><td>${esc(r.status)}</td><td>${f(r.naive_5d)}</td><td>${f(r.naive_1d)}</td><td><b>${f(r.aware_5d)}</b></td><td><b>${f(r.aware_1d)}</b></td></tr>`).join('');
+}
+
+outlook(); replay(); evidence();
+</script>
+</body>
+</html>

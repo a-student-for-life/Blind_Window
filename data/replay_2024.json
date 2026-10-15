@@ -1,0 +1,79 @@
+{
+  "_source": "Values transcribed from SMOKE_TEST_REPORT.md (2026-10-15 run). Peak instants are EWDS valid-time labels = END of the peak day's 24 h mean.",
+  "events": [
+    {
+      "id": "guwahati",
+      "name": "Brahmaputra near Guwahati",
+      "status": "validated (point pixel checked)",
+      "cell": [26.175, 91.725],
+      "peak_instant": "2024-07-02T00:00:00Z",
+      "peak_m3s": 65373.92,
+      "two_year_threshold_m3s": 51461.82,
+      "forecasts": [
+        {"issued": "2024-06-27", "lead_days": 5, "peak_instant": "2024-07-02T00:00:00Z", "peak_m3s": 54453.55},
+        {"issued": "2024-06-28", "lead_days": 4, "peak_instant": "2024-07-02T00:00:00Z", "peak_m3s": 55689.66},
+        {"issued": "2024-06-29", "lead_days": 3, "peak_instant": "2024-07-02T00:00:00Z", "peak_m3s": 57507.38},
+        {"issued": "2024-06-30", "lead_days": 2, "peak_instant": "2024-07-02T00:00:00Z", "peak_m3s": 62214.91},
+        {"issued": "2024-07-01", "lead_days": 1, "peak_instant": "2024-07-02T00:00:00Z", "peak_m3s": 61587.56}
+      ],
+      "ensemble_notes": [
+        {"issued": "2024-06-27", "members": 50, "text": "40 of 50 members peak on the July 1 or July 2 labels; full range July 1 to July 13"},
+        {"issued": "2024-07-01", "members": 50, "text": "49 of 50 members peak on the July 2 label; one on July 25"}
+      ],
+      "planned_passes": [
+        {"satellite": "S2A", "kind": "optical", "time": "2024-07-04T04:26:59Z", "cloud_forecast_by_lead": {"1": 100, "2": 100, "3": 100, "4": 100, "5": 100}},
+        {"satellite": "S2B", "kind": "optical", "time": "2024-07-09T04:26:57Z", "cloud_forecast_by_lead": {"1": 100, "2": 100, "3": 92, "4": 100, "5": 95}},
+        {"satellite": "S1A", "kind": "sar", "time": "2024-07-11T11:54:23Z"}
+      ],
+      "observations": [
+        {"time": "2024-07-04T04:27:11Z", "source": "Sentinel-2A scene", "state": "too_cloudy", "note": "scene cloud 98.9-99.8%"},
+        {"time": "2024-07-04T12:05:07Z", "source": "GFM Sentinel-1", "state": "no_valid_pixel", "note": "tile covers point, pixel is nodata; not in the point plan"},
+        {"time": "2024-07-06T11:49:08Z", "source": "GFM Sentinel-1", "state": "no_valid_pixel", "note": "tile covers point, pixel is nodata; not in the point plan"},
+        {"time": "2024-07-07T04:23:20Z", "source": "Landsat 9 scene", "state": "too_cloudy", "note": "scene cloud 96.8%"},
+        {"time": "2024-07-09T04:27:09Z", "source": "Sentinel-2B scene", "state": "too_cloudy", "note": "scene cloud 89.4-99.3%"},
+        {"time": "2024-07-11T11:57:15Z", "source": "GFM Sentinel-1", "state": "valid_not_flooded", "note": "first valid point pixel after peak; nearest flood pixel 1.84 km away"}
+      ],
+      "first_usable_observed": "2024-07-11T11:57:15Z",
+      "exposure_context": {"ghs_pop_2020_10km_box": 555742, "osm_hospitals_25km": 75}
+    },
+    {
+      "id": "godavari",
+      "name": "Godavari lower reach",
+      "status": "failure case: real observation missing from the plan",
+      "cell": [17.275, 81.675],
+      "peak_instant": "2024-07-27T00:00:00Z",
+      "peak_m3s": 52620.20,
+      "two_year_threshold_m3s": 31322.20,
+      "planned_passes": [
+        {"satellite": "S1A", "kind": "sar", "time": "2024-07-22T00:16:49Z"},
+        {"satellite": "S2A", "kind": "optical", "time": "2024-07-23T04:56:54Z"},
+        {"satellite": "S2B", "kind": "optical", "time": "2024-07-28T04:56:52Z"},
+        {"satellite": "S2A", "kind": "optical", "time": "2024-08-02T04:56:54Z"},
+        {"satellite": "S1A", "kind": "sar", "time": "2024-08-03T00:16:49Z"}
+      ],
+      "observations": [
+        {"time": "2024-07-27T00:30:16Z", "source": "GFM Sentinel-1", "state": "no_valid_pixel", "note": "nodata at the point"},
+        {"time": "2024-07-27T00:31:06Z", "source": "GFM Sentinel-1", "state": "valid_not_flooded", "note": "valid point pixel, but no matching pass in any loaded ESA plan file"}
+      ],
+      "first_usable_observed": "2024-07-27T00:31:06Z"
+    },
+    {
+      "id": "malda",
+      "name": "Ganges basin",
+      "status": "provisional (geometry only, no pixel check)",
+      "cell": [24.775, 87.925],
+      "peak_instant": "2024-08-27T00:00:00Z",
+      "peak_m3s": 52961.40,
+      "two_year_threshold_m3s": 49047.30,
+      "first_usable_observed": "2024-08-29T00:04:13Z"
+    }
+  ],
+  "scorecard": {
+    "_note": "Error = predicted first usable pass minus observed first usable observation, in hours. From the report's predictor tables.",
+    "rows": [
+      {"event": "Brahmaputra near Guwahati", "status": "validated", "naive_5d": -175.50, "naive_1d": -175.50, "aware_5d": -0.05, "aware_1d": -0.05},
+      {"event": "Godavari lower reach", "status": "plan miss", "naive_5d": 148.43, "naive_1d": 28.43, "aware_5d": 167.76, "aware_1d": 167.76},
+      {"event": "Ganges basin", "status": "provisional", "naive_5d": -67.45, "naive_1d": -0.09, "aware_5d": -59.87, "aware_1d": -0.09}
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+<!-- TEST FIXTURE ONLY: hand-made, not real ESA data -->
+<Placemark><TimeSpan><begin>2026-10-17T04:27:01.123Z</begin><end>2026-10-17T04:27:30Z</end></TimeSpan>
+<ExtendedData><Data name="Mode"><value>MSI</value></Data></ExtendedData>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>91.0,25.5,0 92.5,25.5,0 92.5,27.0,0 91.0,27.0,0 91.0,25.5,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+<Placemark><TimeSpan><begin>2026-10-17T04:27:40Z</begin></TimeSpan>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>91.0,25.5 92.5,25.5 92.5,27.0 91.0,27.0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+<Placemark><ExtendedData><Data name="ObservationTimeStart"><value>2026-10-22T04:28:00</value></Data><Data name="ObservationTimeStop"><value>2026-10-22T04:28:30</value></Data></ExtendedData>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>80,10 81,10 81,11 80,11</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+</Document></kml>
