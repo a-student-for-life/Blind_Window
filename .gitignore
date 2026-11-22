@@ -13,3 +13,4 @@ data/study/plans_archive/
 *.grib
 *.grib2
 ee-key.json
+data/study/aux/

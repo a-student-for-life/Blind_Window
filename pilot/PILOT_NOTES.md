@@ -1,7 +1,9 @@
 # Pilot notes
 
-Not started. The pilot runs the 10 events in `pilot_events.json` end to end once the accounts in
-`STUDY_SETUP.md` check out (`python -m study.creds`). Go/no-go rule: `MANUAL_CHECK_10.md`.
+Run with `python -m study.pilot` (resumable; skips finished stages). Results per event in
+`pilot/out/<event>/`, timings in `pilot/out/timings.jsonl`, overview in `pilot/out/PILOT_SUMMARY.md`.
+Needs the accounts in `STUDY_SETUP.md` (`python -m study.creds`), the GloFAS threshold files in
+`data/study/aux/` and the yearly SentiWiki plan ZIPs in `data/study/plans_archive/`. Go/no-go rule: `MANUAL_CHECK_10.md`.
 
 To record here: per-event run time and Earth Engine requests; request fields that had to change
 (EWDS, TIGGE, ASF); plan issue time from file names vs ZIP entry times; whether Guwahati 2024

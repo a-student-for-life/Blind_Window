@@ -88,3 +88,47 @@ def init_ee():
         raise RuntimeError("Set EE_PROJECT to your Earth Engine Cloud project id, or save a key as ~/ee-key.json")
     ee.Initialize(project=project)
     return ee
+
+
+# ---------------------------------------------------------------- TIGGE from the ECMWF Data Store
+# DEVIATIONS.md #1: TIGGE moved to ECDS on 27 May 2026. Key file: ~/.ecdsapirc (url + key, the
+# same two-line format as ~/.cdsapirc). ECDS serves TIGGE as GRIB only, all 50 members.
+
+ECDS_URL = "https://ecds.ecmwf.int/api"
+ECDS_RC = Path.home() / ".ecdsapirc"
+
+
+def tigge_tcc_request_ecds(issue_date, lat, lon, max_step_h=360):
+    return ("tigge-forecasts", {
+        "origin": "ecmf", "level_type": "single_level", "type": "perturbed_forecast",
+        "variable": ["total_cloud_cover"], "date": issue_date.strftime("%Y-%m-%d"),
+        "time": "00:00", "step": [str(s) for s in range(0, max_step_h + 1, 6)],
+        "area": _area(lat, lon, 0.5), "data_format": "grib"})
+
+
+def retrieve_tigge_ecds(issue_date, lat, lon, target, request=None):
+    """request: override (dataset, dict) when the ECDS field names differ from the guess above."""
+    import cdsapi
+    if not ECDS_RC.exists():
+        raise FileNotFoundError(f"{ECDS_RC} missing: save url and key of the ECMWF Data Store there")
+    cfg = dict(line.split(":", 1) for line in ECDS_RC.read_text(encoding="utf-8").splitlines() if ":" in line)
+    dataset, req = request or tigge_tcc_request_ecds(issue_date, lat, lon)
+    cdsapi.Client(url=cfg["url"].strip(), key=cfg["key"].strip()).retrieve(dataset, req, str(target))
+    return Path(target)
+
+
+def tigge_point_series(path, lat, lon, tau):
+    """[(valid_time, ensemble-mean tcc %)] at the grid point nearest (lat, lon)."""
+    from datetime import timedelta
+    import xarray as xr
+    ds = xr.open_dataset(path, engine="cfgrib", backend_kwargs={"indexpath": ""})
+    var = next(v for v in ds.data_vars if "tcc" in v.lower() or "cloud" in v.lower())
+    s = ds[var].sel(latitude=lat, longitude=lon, method="nearest")
+    if "number" in s.dims:
+        s = s.mean("number")
+    scale = 100.0 if float(s.max()) <= 1.0001 else 1.0
+    out = []
+    for st, v in zip(s["step"].values, s.values):
+        hours = float(st / 3.6e12)       # numpy timedelta64[ns] -> hours
+        out.append((tau + timedelta(hours=hours), float(v) * scale))
+    return sorted(out)
