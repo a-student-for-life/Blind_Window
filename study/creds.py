@@ -30,17 +30,15 @@ def check():
     except ValueError:
         rows.append(("ECMWF Web API (TIGGE) ~/.ecmwfapirc", False, "not valid JSON"))
 
-    proj = os.environ.get("EE_PROJECT")
     if importlib.util.find_spec("ee") is None:
         rows.append(("Earth Engine", False, "earthengine-api not installed"))
-    elif not proj:
-        rows.append(("Earth Engine", False, "EE_PROJECT not set"))
     else:
         try:
-            import ee
-            ee.Initialize(project=proj)
+            from .fetch import ee_key_file, init_ee
+            ee = init_ee()
             ee.Number(1).getInfo()
-            rows.append(("Earth Engine", True, f"initialised with project {proj}"))
+            how = "service-account key" if ee_key_file() else "browser login"
+            rows.append(("Earth Engine", True, f"initialised ({how})"))
         except Exception as e:  # report, never hide
             rows.append(("Earth Engine", False, f"init failed: {type(e).__name__}: {str(e)[:120]}"))
 

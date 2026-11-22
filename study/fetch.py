@@ -5,7 +5,8 @@ their first test (field names may need fixing there, recorded in pilot/PILOT_NOT
 Credentials are read by the clients from the user's home folder, never from this repo:
   ~/.cdsapirc     EWDS (GloFAS): url: https://ewds.climate.copernicus.eu/api  key: <token>
   ~/.ecmwfapirc   ECMWF Web API (TIGGE): {"url": ..., "key": ..., "email": ...}
-  Earth Engine    `earthengine authenticate` once, then EE_PROJECT=<cloud project id>
+  Earth Engine    a service-account key file at ~/ee-key.json (or EE_KEY_FILE=<path>), or
+                  `earthengine authenticate` once; plus EE_PROJECT=<cloud project id>
 """
 import os
 from pathlib import Path
@@ -65,10 +66,24 @@ def retrieve_tigge(req):
     return Path(req["target"])
 
 
+def ee_key_file():
+    p = Path(os.environ.get("EE_KEY_FILE", Path.home() / "ee-key.json"))
+    return p if p.exists() else None
+
+
 def init_ee():
+    """Service-account key if present (works where the browser login is blocked), else the
+    stored `earthengine authenticate` login."""
+    import json
     import ee
+    key = ee_key_file()
     project = os.environ.get("EE_PROJECT")
+    if key:
+        info = json.loads(key.read_text(encoding="utf-8"))
+        creds = ee.ServiceAccountCredentials(info["client_email"], str(key))
+        ee.Initialize(creds, project=project or info["project_id"])
+        return ee
     if not project:
-        raise RuntimeError("Set EE_PROJECT to your Earth Engine Cloud project id")
+        raise RuntimeError("Set EE_PROJECT to your Earth Engine Cloud project id, or save a key as ~/ee-key.json")
     ee.Initialize(project=project)
     return ee

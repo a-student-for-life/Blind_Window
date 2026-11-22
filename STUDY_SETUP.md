@@ -25,12 +25,22 @@ cannot reach EWDS, ECMWF, ASF or SentiWiki.
 2. Save it as `C:\Users\<you>\.ecmwfapirc`.
 3. Accept the TIGGE licence once: open the TIGGE dataset page on apps.ecmwf.int and accept the terms.
 
-## 3. Earth Engine project
+## 3. Earth Engine key file
 
-1. In the Earth Engine Code Editor or https://code.earthengine.google.com/register, register a
-   Cloud project for **noncommercial / academic** use and note its **project id**.
-2. On your laptop: `pip install earthengine-api` then `earthengine authenticate` (opens the browser).
-3. Set the project id: `setx EE_PROJECT <project id>` (new terminals pick it up).
+The usual browser login (`earthengine authenticate`) can be blocked by Google with "This app is
+blocked". A key file avoids that login entirely and needs only clicks in the browser.
+
+1. Open https://console.cloud.google.com and pick your Earth Engine project at the top of the page.
+2. Menu (three lines, top left) > **IAM & Admin** > **Service accounts** > **+ Create service
+   account**. Name: `blind-window`. Press **Create and continue**.
+3. Under "Grant this service account access", add two roles: **Earth Engine Resource Viewer**
+   and **Service Usage Consumer**. Press **Continue**, then **Done**.
+4. Click the new account in the list > **Keys** tab > **Add key** > **Create new key** > **JSON** >
+   **Create**. A file downloads.
+5. Rename it to `ee-key.json` and move it to `C:\Users\<you>\` (the same folder as the other
+   two files). Do not share it or upload it anywhere: it works like a password.
+
+The pipeline finds the key file and the project id inside it by itself.
 
 ## Check
 

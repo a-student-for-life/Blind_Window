@@ -12,3 +12,4 @@ data/study/plans_archive/
 *.nc
 *.grib
 *.grib2
+ee-key.json
