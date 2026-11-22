@@ -23,9 +23,10 @@ def _area(lat, lon, half=0.15):
 def glofas_reanalysis_request(year, lat, lon):
     return ("cems-glofas-historical", {
         "system_version": ["version_4_0"], "hydrological_model": ["lisflood"],
-        "product_type": ["consolidated"], "variable": ["river_discharge_in_the_last_24_hours"],
-        "hyear": [str(year)], "hmonth": [f"{m:02d}" for m in range(1, 13)],
-        "hday": [f"{d:02d}" for d in range(1, 32)],
+        "product_type": ["consolidated"], "timespan": ["time_mean"],
+        "variable": ["average_river_discharge_in_the_last_24_hours"],
+        "year": [str(year)], "month": [f"{m:02d}" for m in range(1, 13)],
+        "day": [f"{d:02d}" for d in range(1, 32)],
         "data_format": "netcdf", "download_format": "unarchived", "area": _area(lat, lon)})
 
 
