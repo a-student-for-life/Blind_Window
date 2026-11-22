@@ -2,3 +2,13 @@ data/cache/
 outputs/
 __pycache__/
 .env
+# study: data and credentials never committed
+data/study/cache/
+data/study/plans_archive/
+.cdsapirc
+.ecmwfapirc
+*credentials*.json
+*service-account*.json
+*.nc
+*.grib
+*.grib2

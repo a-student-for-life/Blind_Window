@@ -6,6 +6,18 @@ Predicts when public satellites will next give a usable view of a forecast river
 - **Replay:** the July 2024 Brahmaputra flood, as the system would have seen it 1 to 5 days before the peak.
 - **Evidence:** the three 2024 events, including the Godavari failure case, plus limits.
 
+## Retrospective study (in progress)
+
+`study/` holds the pipeline for the paper *How blind are we? Observed and forecast satellite blind
+windows after river flood peaks*. Start with `ANALYSIS_PLAN.md` (draft, awaiting approval),
+`DEVIATIONS.md`, `STUDY_SETUP.md` (accounts) and `pilot/` (10 pilot events, excluded from results).
+The live app below is reused by the study and is not changed by it.
+
+```
+python -m unittest tests.test_study tests.test_core   # offline, no accounts needed
+python -m study.creds                                  # check EWDS, ECMWF and Earth Engine setup
+```
+
 ## Run it
 
 Needs Python 3.10+ and internet. No extra packages: the pipeline uses only the standard library.
