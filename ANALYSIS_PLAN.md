@@ -2,24 +2,23 @@
 
 Observed and forecast satellite blind windows after river flood peaks in South and Southeast Asia.
 
-Version 0, drafted 22 Nov 2026, before any satellite acquisition, image or cloud forecast has
+Version 1, approved 22 Nov 2026, before any satellite acquisition, image or cloud forecast has
 been pulled for the main event set. The git history of this file is the record of what was
-decided before results existed. After approval, any change goes in `DEVIATIONS.md` with its date,
+decided before results existed. Any later change goes in `DEVIATIONS.md` with its date,
 who agreed, what had and had not been seen, and its effect. Results are reported whatever they show.
 
-Status: **DRAFT, not yet approved.** The main-set outcome steps of the pipeline refuse to run
-until the line above reads "approved by Janice on <date>" (`study/guard.py`).
+Status: **approved by Janice on 22 Nov 2026**, with all seven defaults in the decisions table below.
 
 Only the 10 pilot events (`pilot/`) may be run before approval. They are excluded from every
 main result.
 
 ---
 
-## Decisions for Janice before sign-off
+## Decisions taken at sign-off
 
-Each is drafted with a default. Change any of them before signing; nothing is locked until then.
+Each was drafted with a default; Janice approved all seven defaults on 22 Nov 2026.
 
-| # | Decision | Default in this draft | Main alternative |
+| # | Decision | Approved choice | Alternative not taken |
 |---|---|---|---|
 | D1 | Study area | S and SE Asia, 60–125° E, 11° S–37° N, land of the 16 countries in section 3 | South Asia only (smaller, closer to the Indian demo points) |
 | D2 | Which rivers | GloFAS cells with upstream area ≥ 10,000 km², thinned to one point per 50 km of river | ≥ 5,000 km² (more events, more cells where S1 cannot resolve the river) |

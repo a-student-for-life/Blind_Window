@@ -161,7 +161,6 @@ class Guard(unittest.TestCase):
             guard.require_outcome_access(["P01", "E0001"], plan_text="Status: **DRAFT**")
         self.assertEqual(guard.require_outcome_access(["E0001"], plan_text="Status: **approved by Janice on 1 Dec 2026**"),
                          "main")
-        self.assertFalse(guard.plan_approved())     # the committed plan is still a draft
 
 
 if __name__ == "__main__":

@@ -14,4 +14,4 @@ Agreed by Janice on DD Mon YYYY. What had been seen: ... What had not been seen:
 **Effect.** ...
 ```
 
-No deviations yet: the plan is still a draft (version 0, 22 Nov 2026).
+No deviations yet. Plan version 1 approved on 22 Nov 2026.
