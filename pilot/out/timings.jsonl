@@ -1,0 +1,76 @@
+{"event": "P01", "stage": "glofas", "status": "ok", "seconds": 1.3, "at": "2026-11-22T19:41:17.321527+00:00", "msg": ""}
+{"event": "P02", "stage": "glofas", "status": "ok", "seconds": 177.6, "at": "2026-11-22T19:44:14.888356+00:00", "msg": ""}
+{"event": "P03", "stage": "glofas", "status": "ok", "seconds": 995.0, "at": "2026-11-22T20:00:49.890036+00:00", "msg": ""}
+{"event": "P04", "stage": "glofas", "status": "ok", "seconds": 1112.9, "at": "2026-11-22T20:19:22.749827+00:00", "msg": ""}
+{"event": "P05", "stage": "glofas", "status": "ok", "seconds": 752.7, "at": "2026-11-22T20:31:55.410697+00:00", "msg": ""}
+{"event": "P06", "stage": "glofas", "status": "ok", "seconds": 628.5, "at": "2026-11-22T20:42:23.870007+00:00", "msg": ""}
+{"event": "P01", "stage": "glofas", "status": "ok", "seconds": 1.6, "at": "2026-11-22T20:46:25.340438+00:00", "msg": ""}
+{"event": "P02", "stage": "glofas", "status": "ok", "seconds": 0.3, "at": "2026-11-22T20:46:25.596293+00:00", "msg": ""}
+{"event": "P03", "stage": "glofas", "status": "ok", "seconds": 0.3, "at": "2026-11-22T20:46:25.860298+00:00", "msg": ""}
+{"event": "P04", "stage": "glofas", "status": "ok", "seconds": 0.3, "at": "2026-11-22T20:46:26.122706+00:00", "msg": ""}
+{"event": "P05", "stage": "glofas", "status": "ok", "seconds": 0.3, "at": "2026-11-22T20:46:26.388430+00:00", "msg": ""}
+{"event": "P06", "stage": "glofas", "status": "ok", "seconds": 0.3, "at": "2026-11-22T20:46:26.648598+00:00", "msg": ""}
+{"event": "P07", "stage": "glofas", "status": "ok", "seconds": 994.1, "at": "2026-11-22T21:03:12.967005+00:00", "msg": ""}
+{"event": "P08", "stage": "glofas", "status": "ok", "seconds": 394.1, "at": "2026-11-22T21:09:47.052285+00:00", "msg": ""}
+{"event": "P09", "stage": "glofas", "status": "ok", "seconds": 388.8, "at": "2026-11-22T21:16:15.838907+00:00", "msg": ""}
+{"event": "P10", "stage": "glofas", "status": "ok", "seconds": 516.9, "at": "2026-11-22T21:24:52.776475+00:00", "msg": ""}
+{"event": "P01", "stage": "floodplain", "status": "ok", "seconds": 6.1, "at": "2026-11-22T21:24:59.142764+00:00", "msg": ""}
+{"event": "P02", "stage": "floodplain", "status": "ok", "seconds": 3.6, "at": "2026-11-22T21:25:02.744675+00:00", "msg": ""}
+{"event": "P03", "stage": "floodplain", "status": "ok", "seconds": 3.8, "at": "2026-11-22T21:25:06.524298+00:00", "msg": ""}
+{"event": "P04", "stage": "floodplain", "status": "ok", "seconds": 2.7, "at": "2026-11-22T21:25:09.218545+00:00", "msg": ""}
+{"event": "P05", "stage": "floodplain", "status": "ok", "seconds": 3.3, "at": "2026-11-22T21:25:12.545507+00:00", "msg": ""}
+{"event": "P06", "stage": "floodplain", "status": "ok", "seconds": 4.8, "at": "2026-11-22T21:25:17.357011+00:00", "msg": ""}
+{"event": "P07", "stage": "floodplain", "status": "ok", "seconds": 5.3, "at": "2026-11-22T21:25:22.683313+00:00", "msg": ""}
+{"event": "P08", "stage": "floodplain", "status": "ok", "seconds": 4.0, "at": "2026-11-22T21:25:26.682990+00:00", "msg": ""}
+{"event": "P09", "stage": "floodplain", "status": "ok", "seconds": 4.8, "at": "2026-11-22T21:25:31.519904+00:00", "msg": ""}
+{"event": "P10", "stage": "floodplain", "status": "ok", "seconds": 4.1, "at": "2026-11-22T21:25:35.572926+00:00", "msg": ""}
+{"event": "P01", "stage": "observed", "status": "ok", "seconds": 5.6, "at": "2026-11-22T21:25:41.378937+00:00", "msg": ""}
+{"event": "P02", "stage": "observed", "status": "ok", "seconds": 5.3, "at": "2026-11-22T21:25:46.665008+00:00", "msg": ""}
+{"event": "P03", "stage": "observed", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:46.666203+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P04", "stage": "observed", "status": "ok", "seconds": 4.2, "at": "2026-11-22T21:25:50.841466+00:00", "msg": ""}
+{"event": "P05", "stage": "observed", "status": "ok", "seconds": 3.4, "at": "2026-11-22T21:25:54.215908+00:00", "msg": ""}
+{"event": "P06", "stage": "observed", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:54.217199+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P07", "stage": "observed", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:54.218448+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P08", "stage": "observed", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:54.219950+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P09", "stage": "observed", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:54.221078+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P10", "stage": "observed", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:54.222316+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P01", "stage": "asf", "status": "ok", "seconds": 2.2, "at": "2026-11-22T21:25:56.622576+00:00", "msg": ""}
+{"event": "P02", "stage": "asf", "status": "ok", "seconds": 0.9, "at": "2026-11-22T21:25:57.538388+00:00", "msg": ""}
+{"event": "P03", "stage": "asf", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:57.539565+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P04", "stage": "asf", "status": "ok", "seconds": 1.5, "at": "2026-11-22T21:25:59.059482+00:00", "msg": ""}
+{"event": "P05", "stage": "asf", "status": "ok", "seconds": 0.7, "at": "2026-11-22T21:25:59.763937+00:00", "msg": ""}
+{"event": "P06", "stage": "asf", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:59.765199+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P07", "stage": "asf", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:59.766557+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P08", "stage": "asf", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:59.767639+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P09", "stage": "asf", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:59.768859+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P10", "stage": "asf", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:25:59.770144+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P01", "stage": "plans", "status": "ok", "seconds": 6.8, "at": "2026-11-22T21:26:06.712190+00:00", "msg": ""}
+{"event": "P02", "stage": "plans", "status": "ok", "seconds": 6.8, "at": "2026-11-22T21:26:13.477788+00:00", "msg": ""}
+{"event": "P03", "stage": "plans", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:26:13.479054+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P04", "stage": "plans", "status": "ok", "seconds": 2.5, "at": "2026-11-22T21:26:16.017901+00:00", "msg": ""}
+{"event": "P05", "stage": "plans", "status": "ok", "seconds": 10.7, "at": "2026-11-22T21:26:26.727093+00:00", "msg": ""}
+{"event": "P06", "stage": "plans", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:26:26.728125+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P07", "stage": "plans", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:26:26.729021+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P08", "stage": "plans", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:26:26.729879+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P09", "stage": "plans", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:26:26.730836+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P10", "stage": "plans", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:26:26.732049+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P01", "stage": "climatology", "status": "ok", "seconds": 23.6, "at": "2026-11-22T21:26:50.534584+00:00", "msg": ""}
+{"event": "P02", "stage": "climatology", "status": "ok", "seconds": 17.3, "at": "2026-11-22T21:27:07.875037+00:00", "msg": ""}
+{"event": "P03", "stage": "climatology", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:27:07.876332+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P04", "stage": "climatology", "status": "ok", "seconds": 16.5, "at": "2026-11-22T21:27:24.379769+00:00", "msg": ""}
+{"event": "P05", "stage": "climatology", "status": "ok", "seconds": 23.5, "at": "2026-11-22T21:27:47.911774+00:00", "msg": ""}
+{"event": "P06", "stage": "climatology", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:27:47.913362+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P07", "stage": "climatology", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:27:47.914572+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P08", "stage": "climatology", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:27:47.915813+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P09", "stage": "climatology", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:27:47.917051+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P10", "stage": "climatology", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T21:27:47.918142+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P01", "stage": "forecast", "status": "error", "seconds": 1961.6, "at": "2026-11-22T22:00:54.749338+00:00", "msg": "ValueError: did not find a match in any of xarray's currently installed IO backends ['netcdf4', 'cfgrib']. Consider explicitly selecting one of the installed engines via the ``engine`` parameter, or installing additional IO dependencies, see:\nhttps://docs.xarray.dev/en/stable/getting-started-guide/i"}
+{"event": "P02", "stage": "forecast", "status": "error", "seconds": 1363.5, "at": "2026-11-22T22:23:38.250742+00:00", "msg": "ValueError: did not find a match in any of xarray's currently installed IO backends ['netcdf4', 'cfgrib']. Consider explicitly selecting one of the installed engines via the ``engine`` parameter, or installing additional IO dependencies, see:\nhttps://docs.xarray.dev/en/stable/getting-started-guide/i"}
+{"event": "P03", "stage": "forecast", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T22:23:38.252824+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P04", "stage": "forecast", "status": "ok", "seconds": 0.0, "at": "2026-11-22T22:23:38.257865+00:00", "msg": ""}
+{"event": "P05", "stage": "forecast", "status": "error", "seconds": 1.0, "at": "2026-11-22T22:23:39.221847+00:00", "msg": "HTTPError: 400 Client Error: Bad Request for url: https://ewds.climate.copernicus.eu/api/retrieve/v1/processes/cems-glofas-forecast/execution\ninvalid request\nRequest has not produced a valid combination of values, please check your selection.\n{'area': ['25.175', '89.525', '24.875', '89.825'], 'data_"}
+{"event": "P06", "stage": "forecast", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T22:23:39.223732+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P07", "stage": "forecast", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T22:23:39.225306+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P08", "stage": "forecast", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T22:23:39.226677+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P09", "stage": "forecast", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T22:23:39.227921+00:00", "msg": "no GloFAS event for this pilot point"}
+{"event": "P10", "stage": "forecast", "status": "not_ready", "seconds": 0.0, "at": "2026-11-22T22:23:39.229434+00:00", "msg": "no GloFAS event for this pilot point"}

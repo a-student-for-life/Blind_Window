@@ -122,15 +122,20 @@ def stage_glofas(ev):
 
 
 def series_from_nc(path_, lat, lon):
-    """Daily series at the cell nearest (lat, lon). EWDS labels a daily mean by the END of the
-    24 h, so dates are shifted back one day to the day the mean covers."""
+    """Daily series at the river cell: the cell with the highest mean discharge in the downloaded
+    box (+-0.15 deg around the seed), so a seed a few cells off the main channel still lands on it.
+    EWDS labels a daily mean by the END of the 24 h, so dates are shifted back one day."""
+    import numpy as np
     import xarray as xr
     ds = xr.open_dataset(path_)
     var = next(v for v in ds.data_vars if "dis" in v.lower())
     latn = "latitude" if "latitude" in ds.coords else "lat"
     lonn = "longitude" if "longitude" in ds.coords else "lon"
-    s = ds[var].sel({latn: lat, lonn: lon}, method="nearest")
-    tname = next(c for c in s.dims if "time" in c)
+    tname = next(c for c in ds[var].dims if "time" in c)
+    mean = ds[var].mean(tname).values
+    i, j = np.unravel_index(int(np.nanargmax(mean)), mean.shape)
+    s = ds[var].isel({latn: i, lonn: j}) if ds[var].mean(tname).dims == (latn, lonn) else \
+        ds[var].isel({lonn: i, latn: j})
     days = [(datetime.fromisoformat(str(t)[:19]) - timedelta(days=1)).date().isoformat() for t in s[tname].values]
     vals = [None if v != v else float(v) for v in s.values]
     cell = (float(s[latn]), float(s[lonn]))
@@ -317,13 +322,31 @@ def stage_forecast(ev):
 
 def forecast_members(path_, lat, lon, tau):
     """Per-member daily series from a GloFAS forecast file. Returns (dates, [member series])."""
+    import zipfile
     import xarray as xr
-    ds = xr.open_dataset(path_)
-    var = next(v for v in ds.data_vars if "dis" in v.lower())
-    latn = "latitude" if "latitude" in ds.coords else "lat"
-    lonn = "longitude" if "longitude" in ds.coords else "lon"
-    s = ds[var].sel({latn: lat, lonn: lon}, method="nearest")
-    step = next(c for c in s.dims if "step" in c or "lead" in c or c == "valid_time")
+    if zipfile.is_zipfile(path_):
+        # EWDS zips control + perturbed into one download (data_0.nc, data_1.nc) even when
+        # download_format is "unarchived"; unpack next to the cache file and stack the members.
+        out_dir = Path(path_).with_suffix("")
+        with zipfile.ZipFile(path_) as z:
+            z.extractall(out_dir)
+        parts = [xr.open_dataset(p) for p in sorted(out_dir.glob("*.nc"))]
+    else:
+        parts = [xr.open_dataset(path_)]
+    das = []
+    for ds in parts:
+        var = next(v for v in ds.data_vars if "dis" in v.lower())
+        da = ds[var]
+        for d in [d for d in da.dims if da.sizes[d] == 1 and "reference" in d]:
+            da = da.isel({d: 0})
+        if "number" not in da.dims:
+            da = da.expand_dims("number")
+        das.append(da)
+    da = xr.concat(das, "number") if len(das) > 1 else das[0]
+    latn = "latitude" if "latitude" in da.coords else "lat"
+    lonn = "longitude" if "longitude" in da.coords else "lon"
+    s = da.sel({latn: lat, lonn: lon}, method="nearest")
+    step = next(c for c in s.dims if "step" in c or "lead" in c or "period" in c or c == "valid_time")
     num = next((c for c in s.dims if c in ("number", "realization", "member")), None)
     steps = s[step].values
     dates = []

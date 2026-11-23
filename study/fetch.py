@@ -30,9 +30,13 @@ def glofas_reanalysis_request(year, lat, lon):
         "data_format": "netcdf", "download_format": "unarchived", "area": _area(lat, lon)})
 
 
+GLOFAS_V4_FORECAST_START = "2021-05-26"   # before this date the archive holds htessel_lisflood (0.1 deg)
+
+
 def glofas_forecast_request(issue_date, lat, lon, max_lead_h=720):
+    model = "lisflood" if issue_date.isoformat() >= GLOFAS_V4_FORECAST_START else "htessel_lisflood"
     return ("cems-glofas-forecast", {
-        "system_version": ["operational"], "hydrological_model": ["lisflood"],
+        "system_version": ["operational"], "hydrological_model": [model],
         "product_type": ["control_forecast", "ensemble_perturbed_forecasts"],
         "variable": ["river_discharge_in_the_last_24_hours"],
         "year": [str(issue_date.year)], "month": [f"{issue_date.month:02d}"], "day": [f"{issue_date.day:02d}"],
@@ -98,11 +102,15 @@ ECDS_URL = "https://ecds.ecmwf.int/api"
 ECDS_RC = Path.home() / ".ecdsapirc"
 
 
-def tigge_tcc_request_ecds(issue_date, lat, lon, max_step_h=360):
+def tigge_tcc_request_ecds(issue_date, lat, lon, max_step_h=360, steps=None):
+    """Field names from the ECDS form (catalogue/v1/collections/tigge-forecasts/form.json).
+    The form has no member choice: all 50 perturbed members come back."""
+    steps = range(0, max_step_h + 1, 6) if steps is None else steps
     return ("tigge-forecasts", {
-        "origin": "ecmf", "level_type": "single_level", "type": "perturbed_forecast",
-        "variable": ["total_cloud_cover"], "date": issue_date.strftime("%Y-%m-%d"),
-        "time": "00:00", "step": [str(s) for s in range(0, max_step_h + 1, 6)],
+        "origin": "ecmwf", "level_type": "single_level", "forecast_type": "perturbed_forecast",
+        "variable": ["total_cloud_cover"],
+        "year": str(issue_date.year), "month": f"{issue_date.month:02d}", "day": f"{issue_date.day:02d}",
+        "time": "00:00", "leadtime_hour": [str(s) for s in steps],
         "area": _area(lat, lon, 0.5), "data_format": "grib"})
 
 
@@ -120,6 +128,7 @@ def retrieve_tigge_ecds(issue_date, lat, lon, target, request=None):
 def tigge_point_series(path, lat, lon, tau):
     """[(valid_time, ensemble-mean tcc %)] at the grid point nearest (lat, lon)."""
     from datetime import timedelta
+    import numpy as np
     import xarray as xr
     ds = xr.open_dataset(path, engine="cfgrib", backend_kwargs={"indexpath": ""})
     var = next(v for v in ds.data_vars if "tcc" in v.lower() or "cloud" in v.lower())
@@ -129,6 +138,6 @@ def tigge_point_series(path, lat, lon, tau):
     scale = 100.0 if float(s.max()) <= 1.0001 else 1.0
     out = []
     for st, v in zip(s["step"].values, s.values):
-        hours = float(st / 3.6e12)       # numpy timedelta64[ns] -> hours
+        hours = float(np.timedelta64(st, "ns") / np.timedelta64(1, "h"))
         out.append((tau + timedelta(hours=hours), float(v) * scale))
     return sorted(out)

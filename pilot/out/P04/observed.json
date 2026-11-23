@@ -1,0 +1,92 @@
+{
+ "acquisitions": [
+  {
+   "time": "2017-08-08T12:21:12+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2017-08-11T00:11:39+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2017-08-11T04:58:04.900000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2017-08-16T05:01:09.290000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2017-08-20T12:21:13+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2017-08-23T00:11:40+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2017-08-31T05:01:02.290000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.12521546707101563,
+   "usable": false
+  },
+  {
+   "time": "2017-09-01T12:21:13+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2017-09-04T00:11:40+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2017-09-05T05:01:07.290000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.6292847716071696,
+   "usable": false
+  },
+  {
+   "time": "2017-09-13T12:21:13+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  }
+ ],
+ "bw_any_h": 156.35,
+ "censored_any": false,
+ "first_usable_time": "2017-08-20T12:21:13+00:00",
+ "first_usable_mission": "S1",
+ "bw_s1_h": 156.35,
+ "censored_s1": false,
+ "bw_s2_h": 720,
+ "censored_s2": true,
+ "missed": true,
+ "seen_during_flood": false,
+ "seen_near_peak": false
+}

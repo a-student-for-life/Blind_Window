@@ -1,0 +1,99 @@
+{
+ "acquisitions": [
+  {
+   "time": "2024-06-24T04:41:15.032000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.62082587991784,
+   "usable": false
+  },
+  {
+   "time": "2024-06-24T23:55:41+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2024-06-29T04:41:14.866000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2024-06-29T11:57:16+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2024-07-04T04:41:14.569000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2024-07-09T04:41:13.586000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.05462077067222602,
+   "usable": false
+  },
+  {
+   "time": "2024-07-11T11:57:15+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2024-07-14T04:41:13.175000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2024-07-19T04:41:14.465000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0006923587576821273,
+   "usable": false
+  },
+  {
+   "time": "2024-07-23T11:57:15+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2024-07-24T04:41:13.169000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2024-07-29T04:41:12.712000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  }
+ ],
+ "bw_any_h": 227.95,
+ "censored_any": false,
+ "first_usable_time": "2024-07-11T11:57:15+00:00",
+ "first_usable_mission": "S1",
+ "bw_s1_h": 227.95,
+ "censored_s1": false,
+ "bw_s2_h": 720,
+ "censored_s2": true,
+ "missed": true,
+ "seen_during_flood": false,
+ "seen_near_peak": false
+}
