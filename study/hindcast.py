@@ -1,7 +1,7 @@
 """Forecast replay "as of" the issue time (ANALYSIS_PLAN.md section 7).
 
 Everything passed in must have been available at tau: the GloFAS forecast issued at tau, the plans
-issued >= 24 h before each pass, and the cloud expectation for each S2 pass. Since deviation 2
+issued >= 24 h before tau (section 6), and the cloud expectation for each S2 pass. Since deviation 2
 the cloud expectation is the site's usual cloudiness (cloud_climatology_factory), not TIGGE.
 """
 import statistics

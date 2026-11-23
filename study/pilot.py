@@ -283,25 +283,29 @@ def rq2(ev):
 
 
 def stage_climatology(ev):
-    """Observed blind window (any mission) from every 3rd day of the same month in the other years."""
+    """Observed blind window (any mission) from every 3rd day of the peak month and the months on
+    either side, in the other years. Baseline 3 uses the month of the PREDICTED peak, which can be
+    the month before or after the observed one."""
     guard.require_outcome_access([ev["id"]])
     e, inst, fp = _need_event(ev)
     fetch.init_ee()
     month, year = _d(e["peak_date"]).month, _d(e["peak_date"]).year
+    months = [(month - 2) % 12 + 1, month, month % 12 + 1]
     rows = []
     y0, y1 = (int(PERIOD_Y) for PERIOD_Y in (C.PERIOD[0][:4], C.PERIOD[1][:4]))
     for y in range(y0, y1 + 1):
         if y == year:
             continue
-        m_start = datetime(y, month, 1, tzinfo=UTC)
-        m_end = (m_start + timedelta(days=32)).replace(day=1)
-        acq = observed.ee_acquisitions(fp["lat"], fp["lon"], m_start, m_end + timedelta(days=C.SEARCH_DAYS + 1))
-        d = m_start
-        while d < m_end:
-            inst_d = {"t0": d, "onset": d, "end": d}
-            rows.append((d.date().isoformat(), observed.blind_window(inst_d, acq)["bw_any_h"]))
-            d += timedelta(days=C.CLIMATOLOGY_STEP_DAYS)
-    return {"month": month, "rows": rows}
+        for m in months:
+            m_start = datetime(y, m, 1, tzinfo=UTC)
+            m_end = (m_start + timedelta(days=32)).replace(day=1)
+            acq = observed.ee_acquisitions(fp["lat"], fp["lon"], m_start, m_end + timedelta(days=C.SEARCH_DAYS + 1))
+            d = m_start
+            while d < m_end:
+                inst_d = {"t0": d, "onset": d, "end": d}
+                rows.append((d.date().isoformat(), observed.blind_window(inst_d, acq)["bw_any_h"]))
+                d += timedelta(days=C.CLIMATOLOGY_STEP_DAYS)
+    return {"months": months, "rows": rows}
 
 
 def stage_cloudclim(ev):
@@ -349,7 +353,7 @@ def stage_forecast(ev):
             fetch.retrieve_ewds(fetch.glofas_forecast_request(tau.date(), g["cell"][0], g["cell"][1]), fc_path)
         fc_dates, members = forecast_members(fc_path, g["cell"][0], g["cell"][1], tau)
         pred_peak = hindcast.predicted_peak(fc_dates, members)
-        passes, ends = planned_as_of(pj["plans"], tau)
+        passes, ends = planned_as_of(pj["plans"], tau, C.PLAN_LEAD_H)   # section 6: issued >= 24 h before tau
         f = hindcast.forecast(tau, pred_peak, passes, ends, cloud_look=cloud_look)
         past_s1 = [{"satellite": a["satellite"], "time": _dt(a["time"])} for a in asf["passes"]]
         preds = {
