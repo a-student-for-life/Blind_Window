@@ -95,3 +95,19 @@ that falls outside every land polygon (some river mouths) is dropped, as before.
 
 **Effect.** Small differences at disputed or coastal borders only; the count of points per
 country is reported in `data/study/events_summary.json`.
+
+## 5. No lake and reservoir mask, 23 Nov 2026
+
+Recorded on 23 Nov 2026, before any main-set event was found. **Old rule.** Section 3: lake and
+reservoir cells (GloFAS mask) are dropped. **Problem.** The GloFAS v4 auxiliary-data page offers
+no lake or reservoir mask file. **New rule.** No mask is applied; river points are kept as found.
+**Effect.** A few points may sit in reservoirs, where floods are regulated; the floodplain-point
+rule (section 4, not permanent water) and the human checks limit this. Counted in the limitations.
+
+## 6. Placebo dates for RQ1 only, 23 Nov 2026
+
+Recorded on 23 Nov 2026, before any main-set outcome. **Old rule.** Section 9: placebo dates are
+run through sections 5 and 7. **Problem.** Section 7 on placebo dates needs about 400 more GloFAS
+forecast downloads (about 40 min each), which do not fit before the deadline (see #3).
+**New rule.** Placebo dates are run through section 5 (RQ1 contrast) only. **Effect.** The check
+"a forecast gain that appears only on placebo dates" is not made; stated as a limitation.
