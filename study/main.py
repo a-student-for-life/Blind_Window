@@ -106,8 +106,12 @@ if __name__ == "__main__":
     ap.add_argument("--only", nargs="*")
     ap.add_argument("--stage", choices=pilot.STAGES)
     ap.add_argument("--status", action="store_true")
+    ap.add_argument("--part", help="k/n: run only every n-th event starting at k (1-based), so two windows can run side by side, e.g. 1/2 and 2/2")
     a = ap.parse_args()
     evs = main_events()
+    if a.part and not a.status:
+        k, n = (int(x) for x in a.part.split("/"))
+        evs = [e for i, e in enumerate(evs) if i % n == k - 1]
     if a.status:
         status(evs)
     else:

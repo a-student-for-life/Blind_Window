@@ -18,6 +18,9 @@ skips what is already finished. Keep the laptop on, plugged in and online while 
 | 4. Tables and figures | `python -m study.analyse` | a minute | `results/RESULTS.md`, `results/fig_rq1_survival.png`, `results/events_results.csv` |
 | 5. Human check sheet | `python -m study.checkpage --main` | seconds | `results/CHECK_SHEET_main.md` |
 
+Step 2 is faster in two PowerShell windows side by side: `python -m study.main --part 1/2` in one and
+`python -m study.main --part 2/2` in the other (never more than two: Copernicus may block the account).
+
 Step 4 can be run while step 2 is still going: it uses whatever has finished so far.
 
 ## If something goes wrong
