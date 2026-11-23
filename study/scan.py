@@ -289,7 +289,8 @@ def step_events():
             pk = str(e["peak_date"])[:10]
             if not (C.PERIOD[0] <= pk <= C.PERIOD[1]):
                 continue
-            row = {"point_id": pid, "lat": p["lat"], "lon": p["lon"], "country": p["country"], "basin": p["basin"],
+            row = {"point_id": pid, "lat": p["lat"], "lon": p["lon"], "country": p["country"],
+                   "basin": str(p["basin"]) if p["basin"] != -1 else "outlet_" + p["outlet"],   # no basin: own river
                    "upstream_km2": p["upstream_km2"], "threshold_m3s": round(thr, 1),
                    "onset": str(e["onset"])[:10], "peak_date": pk, "end": str(e["end"])[:10],
                    "peak_m3s": round(e["peak_m3s"], 1), "n_above": e["n_above"]}
@@ -310,7 +311,10 @@ def step_events():
     _write_csv(OUT / "events_all.csv", allev, cols)
     main = cap_sample(allev, C.EVENT_CAP, C.SEED)
     _write_csv(OUT / "events_main.csv", main, cols)
-    rq3 = events.rq3_sample(main, [e["episode"] for e in main], C.RQ3_SAMPLE_N, C.RQ3_START, C.SEED)
+    # section 3: RQ3 main sample = monsoon months (June-October) of 2020-2024, from the forecast archive on
+    pool = [e for e in main if C.RQ3_MAIN_YEARS[0] <= int(e["peak_date"][:4]) <= C.RQ3_MAIN_YEARS[1]
+            and int(e["peak_date"][5:7]) in C.RQ3_MAIN_MONTHS]
+    rq3 = events.rq3_sample(pool, [e["episode"] for e in pool], C.RQ3_SAMPLE_N, C.RQ3_START, C.SEED)
     for k, e in enumerate(rq3):
         e["rq3_order"] = k + 1
         e["rq3_leads"] = "1,3,5" if k < C.RQ3_SECONDARY_N else "3"

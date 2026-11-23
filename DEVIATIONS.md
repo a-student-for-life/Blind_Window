@@ -72,8 +72,8 @@ of 3 days (main) and 1 and 5 days (secondary).
 40 minutes in the Copernicus queue (requests for two dates at once were refused). With up to
 800 events × 3 leads, the downloads would take about 33 days and end after the study deadline.
 
-**New rule.** The forecast test runs on a random subset of 200 main events whose peak is on or
-after 15 Nov 2019, drawn with seed 20261122, stratified by year, at most one event per episode,
+**New rule.** The forecast test runs on a random subset of 200 main events from its main sample
+(section 3: peaks in June–October of 2020–2024), drawn with seed 20261122, stratified by year, at most one event per episode,
 at L = 3 days. Leads 1 and 5 days run on the first 50 events of the same draw. The draw is made
 from the event list alone, before any forecast or outcome is downloaded, and committed. If fewer
 than 200 events qualify, all are used. RQ1 and RQ2 still use every main event.
