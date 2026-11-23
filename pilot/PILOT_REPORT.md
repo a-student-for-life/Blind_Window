@@ -8,7 +8,10 @@ from all main results (ANALYSIS_PLAN.md section 13). Raw outputs: `pilot/out/`, 
 
 **Go, for RQ1 and RQ2.** Every step for the observed blind window and the plan check works end to
 end, runs in seconds per event, and gives clear, plausible numbers.
-**RQ3 (forecast test): RQ3_VERDICT**
+**RQ3 (forecast test): go, but smaller.** The method works and is very accurate when GloFAS gets
+the peak day right (2 of 3 pilot floods: under 6 minutes off, baselines 67–228 h off). But each
+GloFAS forecast download now waits about 40 minutes at Copernicus, so testing all 800 events at
+three leads would take over a month. Recommendation: forecast test on a random subset (section 3).
 
 ## 1. What the pilot found
 
@@ -28,11 +31,29 @@ end, runs in seconds per event, and gives clear, plausible numbers.
 - **3 of 4 floods were missed** (no usable image before the flow fell back below the 5-year level),
   and the blind window after these peaks was 2–4 times longer than usual for the same spot.
   This is the headline the study is built to test; 4 events prove nothing, but the signal is there.
-- **Plans vs reality (RQ2):** PLANS_LINE
+- **Plans vs reality (RQ2):** 60–100% of real Sentinel-1 images over the point had been planned
+  (P01 1.00, P02 0.60, P04 0.67, P05 1.00). The real first image after the peak was always a
+  planned one in these four.
 
 ## 2. Forecast test (RQ3)
 
-RQ3_SECTION
+Error of the predicted first usable image time, in hours (cloud = usual cloudiness, DEVIATIONS #2).
+
+| Event | Lead | Blind-window forecast | Next pass, any | Next S1 pass | Usual blind window |
+|---|---|---|---|---|---|
+| P01 Guwahati 2024 | 1 / 3 / 5 days | **0.0 / 0.0 / 0.0** | 175.5 / 175.5 / 175.5 | 108.0 / 228.2 / 108.0 | 168 / 180 / 168 |
+| P02 Godavari 2024 | 1 / 3 / 5 days | **0.1 / 0.1 / 0.1** | 139.4 | 167.9 | 67.3 |
+| P05 Jamuna 2020 | 1 / 3 / 5 days | **288 / 288 / 288** | 288 / 112.5 / 112.5 | 288 | 336 / 168 / 168 |
+| P04 Kosi 2017 | | before the forecast archive (2019) | | | |
+
+- **P01, P02:** the forecast picked the planned radar pass that really gave the first image, from
+  ESA plans published at least 24 h before the forecast date. Checked for leaks: none (P01's plan
+  was issued 21 Jun 2024; planned and real pass 3 minutes apart).
+- **P05 miss:** GloFAS (the older pre-2021 version) forecast the Jamuna peak 4–11 days late
+  (16–23 July instead of 12 July), so the method skipped the 13 July radar pass and chose the next
+  one 12 days later. The weak point is peak timing, not the satellite part. The planned
+  "oracle peak" run (section 7) measures exactly this.
+- Three events say nothing yet about whether the method beats the baselines overall.
 
 ## 3. Time and size
 
@@ -43,14 +64,22 @@ RQ3_SECTION
 | Observed images | 5 s | Earth Engine |
 | S1 records (ASF) | 1.5 s | |
 | Plans | 7 s | plan archive downloaded once |
-| Site climatology | 24 s | Earth Engine |
-| Usual cloudiness | CLOUDCLIM_T | Earth Engine |
-| GloFAS forecasts (3 per event) | FORECAST_T | download queue at Copernicus |
+| Site climatology | 34 s | Earth Engine |
+| Usual cloudiness | 15 s | Earth Engine |
+| GloFAS forecasts (3 per event) | about 40 min each, mostly queue (2 at a time) | download queue at Copernicus |
 
 Downloads for 10 events: about 185 MB, so 800 events is roughly 15 GB passing through, but only
 small tables are kept. That is why the main run goes to GitHub Actions, not the laptop.
 
-**Scaling to the main run (cap 800 events):** SCALING
+**Scaling to the main run (cap 800 events):**
+
+- RQ1 and RQ2 (everything except forecasts): about 1–2 minutes of work per event plus one GloFAS
+  record per river point. Roughly 1–2 days unattended for 800 events. Fits easily before 15 Dec.
+- RQ3 as approved (3 forecasts per event from Nov 2019 on): up to 2,400 downloads × 40 min,
+  2 at a time = about 33 days. Does not fit.
+- **RQ3 on a random subset of 200 events, lead 3 days only, plus 50 of them at 1 and 5 days:**
+  300 downloads, about 4 days unattended. Fits. The subset is drawn by a fixed random seed before
+  any forecast is downloaded, so it can't be cherry-picked (would be plan change #3).
 
 ## 4. Things to fix or decide before the main run
 
