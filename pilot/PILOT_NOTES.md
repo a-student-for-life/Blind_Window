@@ -49,3 +49,13 @@ applied as written (proposed change goes to Janice before approval).
   (`*_southasia_sea.nc`, 10.8 MB each) and the global files deleted.
 - P01 cell (26.175, 91.725): 2-year 51,462, 5-year 59,746, 10-year 65,230 m3/s. GloFAS reanalysis
   peak 65,374 m3/s for 1 July 2024 (label 2 July), so above the 10-year level.
+
+## Manual check and go / no-go (23 Nov 2026)
+
+- Janice checked the 4 events that reached the 5-year flow (P01, P02, P04, P05). Questions 1-4 were
+  Yes / Yes / Yes / nothing earlier missed for all 4 (`pilot/MANUAL_CHECK_10.md`).
+- P01 question 4 was answered with the assistant's help, so it is not independent; 3 of 3 fully
+  independent checks pass as well.
+- Rule as read in PILOT_REPORT.md section 5 (yes for all 4 checkable events): met. **Go.**
+- Open point from the report (floodplain point at the river edge, HAND 0 m): Janice judged all 4
+  points to be on land by the river, so the point rule stays unchanged.
