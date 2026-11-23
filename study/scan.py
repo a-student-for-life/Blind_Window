@@ -130,7 +130,7 @@ def step_points():
         ds = xr.open_dataset(f)
         latn = "latitude" if "latitude" in ds.coords else "lat"
         lonn = "longitude" if "longitude" in ds.coords else "lon"
-        da = ds[next(iter(ds.data_vars))]
+        da = ds[next(v for v in ds.data_vars if ds[v].ndim >= 2)]
         lats = ds[latn].values
         sl = slice(lat1, lat0) if lats[0] > lats[-1] else slice(lat0, lat1)
         da = da.sel({latn: sl, lonn: slice(lon0, lon1)}).squeeze()
