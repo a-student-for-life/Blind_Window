@@ -12,7 +12,7 @@ skips what is already finished. Keep the laptop on, plugged in and online while 
 
 | Step | Command | Time | What you get |
 |---|---|---|---|
-| 1. Find all floods | `python -m study.scan` | 1–3 days, unattended | `data/study/events_main.csv` (up to 800 floods), `rq3_sample.csv` (200), `events_summary.json` (counts) |
+| 1. Find all floods | `python -m study.scan` | 1–3 days, unattended | `data/study/events_main.csv` (up to 800 floods), `rq3_sample.csv` (200), `placebo_dates.csv`, `blind_check_100.csv` (for you and Jordan), `events_summary.json` (counts) |
 | 2. Satellite results | `python -m study.main` | about 1–2 days for 800 floods, plus about 4 days of forecast downloads for the 200 | `data/study/out/<event>/` |
 | 3. Check progress any time | `python -m study.main --status` | seconds | how many floods have finished each step |
 | 4. Tables and figures | `python -m study.analyse` | a minute | `results/RESULTS.md`, `results/fig_rq1_survival.png`, `results/events_results.csv` |

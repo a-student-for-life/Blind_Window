@@ -315,13 +315,55 @@ def step_events():
         e["rq3_order"] = k + 1
         e["rq3_leads"] = "1,3,5" if k < C.RQ3_SECONDARY_N else "3"
     _write_csv(OUT / "rq3_sample.csv", rq3, cols + ["rq3_order", "rq3_leads"])
+    placebo = placebo_dates(main, series, C.SEED)
+    _write_csv(OUT / "placebo_dates.csv", placebo, ["event_id", "point_id", "placebo_date"])
+    check = events.rq3_sample(main, [e["episode"] for e in main], 100, C.PERIOD[0], C.SEED + 1)
+    _write_csv(OUT / "blind_check_100.csv", check, ["event_id", "point_id", "lat", "lon", "country", "peak_date"])
     summary = {"points": len(pts), "points_with_series": len(series), "events_found": len(allev),
-               "excluded": counts, "main": len(main), "rq3": len(rq3),
+               "excluded": counts, "main": len(main), "rq3": len(rq3), "placebo_dates": len(placebo),
                "episodes_main": len({e["episode"] for e in main}),
                "by_year": _count(main, lambda e: e["peak_date"][:4]),
                "by_country": _count(main, lambda e: e["country"])}
     (OUT / "events_summary.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
     print(json.dumps(summary, indent=1))
+
+
+def placebo_dates(evs, series, seed, n=2, half=15):
+    """Section 9: per event, n non-flood dates at the same point, same day of year +/- half days,
+    another study year, discharge below the 2-year threshold for 7 days either side; seeded."""
+    import random
+    from .thresholds import rp_threshold
+    rng = random.Random(seed)
+    out = []
+    for e in sorted(evs, key=lambda e: e["event_id"]):
+        days, qs = series[e["point_id"]]
+        thr2 = rp_threshold(e["lat"], e["lon"], 2)
+        if thr2 is None:
+            continue
+        q = dict(zip(days, qs))
+        pk = date.fromisoformat(e["peak_date"])
+        cands = []
+        for y in range(int(C.PERIOD[0][:4]), int(C.PERIOD[1][:4]) + 1):
+            if y == pk.year:
+                continue
+            try:
+                c0 = pk.replace(year=y)
+            except ValueError:
+                c0 = pk.replace(year=y, day=28)
+            for k in range(-half, half + 1):
+                d = c0 + timedelta(days=k)
+                win = [q.get((d + timedelta(days=j)).isoformat()) for j in range(-7, 8)]
+                if all(v is not None and v < thr2 for v in win):
+                    cands.append(d.isoformat())
+        rng.shuffle(cands)
+        picked = []
+        for d in cands:                       # different years for the two dates
+            if all(d[:4] != p[:4] for p in picked):
+                picked.append(d)
+            if len(picked) == n:
+                break
+        out += [{"event_id": e["event_id"], "point_id": e["point_id"], "placebo_date": d} for d in sorted(picked)]
+    return out
 
 
 def _pilot_refs():

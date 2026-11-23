@@ -24,6 +24,24 @@ pilot.OUT = DATA / "out"
 RQ3_STAGES = {"climatology", "cloudclim", "forecast"}
 
 
+def stage_placebo(ev):
+    """Section 9 (RQ1 contrast): observed blind window from each placebo date of this event."""
+    from datetime import datetime, timedelta, timezone
+    from . import fetch, guard, observed
+    guard.require_outcome_access([ev["id"]])
+    fp = pilot.load(ev["id"], "floodplain")
+    if not fp or fp.get("lat") is None or not ev.get("placebo"):
+        return {"skipped": "no floodplain point or no placebo date"}
+    fetch.init_ee()
+    rows = []
+    for d in ev["placebo"]:
+        t0 = datetime.fromisoformat(d).replace(tzinfo=timezone.utc) + timedelta(days=1)   # end of the day
+        acq = observed.ee_acquisitions(fp["lat"], fp["lon"], t0 - timedelta(days=1), t0 + timedelta(days=C.SEARCH_DAYS + 1))
+        bw = observed.blind_window({"t0": t0, "onset": t0, "end": t0}, acq)
+        rows.append({"date": d, **{k: bw[k] for k in ("bw_any_h", "bw_s1_h", "bw_s2_h", "censored_any")}})
+    return {"dates": rows}
+
+
 def main_events():
     with open(DATA / "events_main.csv", encoding="utf-8") as f:
         evs = list(csv.DictReader(f))
@@ -32,10 +50,16 @@ def main_events():
     if p.exists():
         with open(p, encoding="utf-8") as f:
             rq3 = {r["event_id"]: r for r in csv.DictReader(f)}
+    plc = {}
+    p = DATA / "placebo_dates.csv"
+    if p.exists():
+        with open(p, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                plc.setdefault(r["event_id"], []).append(r["placebo_date"])
     out = []
     for e in evs:
         ev = {"id": e["event_id"], "name": e["point_id"], "lat": float(e["lat"]), "lon": float(e["lon"]),
-              "row": e, "rq3": e["event_id"] in rq3}
+              "row": e, "rq3": e["event_id"] in rq3, "placebo": plc.get(e["event_id"], [])}
         if ev["rq3"]:
             ev["leads"] = tuple(int(x) for x in rq3[e["event_id"]]["rq3_leads"].split(","))
         out.append(ev)
@@ -90,5 +114,8 @@ if __name__ == "__main__":
         for ev in evs:
             write_glofas(ev)
         pilot.RUNNERS["glofas"] = lambda ev: pilot.load(ev["id"], "glofas")
+        pilot.RUNNERS["placebo"] = stage_placebo
+        if "placebo" not in pilot.STAGES:
+            pilot.STAGES.insert(pilot.STAGES.index("observed") + 1, "placebo")
         pilot.run(a.only, a.stage, evs=evs, skip=skip)
         status(evs)

@@ -47,6 +47,9 @@ def collect(evs):
                 for k in ("n_actual", "n_planned", "n_matched"):
                     r[f"{m}_{k}"] = q[m][k]
                 r[f"{m}_usable_matched"] = round((q[m]["usable_precision"] or 0) * q[m]["n_planned"])
+        pl = pilot.load(ev["id"], "placebo")
+        if pl and pl.get("dates"):
+            r["placebo_bw_any_h"] = float(np.mean([x["bw_any_h"] for x in pl["dates"]]))
         fc = pilot.load(ev["id"], "forecast")
         if fc and "leads" in fc:
             for L, v in fc["leads"].items():
@@ -97,6 +100,13 @@ def rq1(rows, out):
     first = {}
     for r in rows:
         first[r["first_usable_mission"] or "none in 30 days"] = first.get(r["first_usable_mission"] or "none in 30 days", 0) + 1
+    pr = [r for r in rows if r.get("placebo_bw_any_h") is not None]
+    if pr:
+        diff = [r["bw_any_h"] - r["placebo_bw_any_h"] for r in pr]
+        ci = _boot_ci(diff, [r["episode"] for r in pr], lambda v: v.mean())
+        lines += ["", f"Placebo contrast (section 9): flood minus non-flood dates at the same points, mean "
+                      f"{np.mean(diff):.0f} h [95% CI {ci[0]:.0f}, {ci[1]:.0f}], {len(pr)} events "
+                      f"(blind windows capped at {C.CENSOR_H} h)."]
     lines += ["", "First usable image by mission: " + ", ".join(f"{k} {v}" for k, v in sorted(first.items())), ""]
     _km_figure(rows, out / "fig_rq1_survival.png")
     lines += ["![Share of floods not yet seen](fig_rq1_survival.png)", ""]
