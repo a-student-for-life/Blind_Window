@@ -218,11 +218,30 @@ def _extract(nc, pts, year, target):
     ds.close()
 
 
+def tile_order(tiles, scan_dir=None):
+    """Tiles in a seeded random order, all years of a tile together, so the tiles finished by any
+    cut-off date are a random sample of the region with complete records (DEVIATIONS.md #7).
+    Tiles that already have a finished year go first, so no started tile is left half done."""
+    import random
+    scan_dir = scan_dir or SCAN
+    keys = sorted(tiles)
+    random.Random(C.SEED).shuffle(keys)
+    started = [k for k in keys if any(scan_dir.glob(f"{k}_*.npz"))]
+    return [(k, tiles[k]) for k in started + [k for k in keys if k not in started]]
+
+
+def complete_tiles(tiles, scan_dir=None):
+    """Tiles with every year of the study period downloaded."""
+    scan_dir = scan_dir or SCAN
+    y0, y1 = int(C.PERIOD[0][:4]), int(C.PERIOD[1][:4])
+    return {k for k in tiles if all((scan_dir / f"{k}_{y}.npz").exists() for y in range(y0, y1 + 1))}
+
+
 def step_download(keep_raw=False):
     pts = _read_points()
     jobs = []
     y0, y1 = int(C.PERIOD[0][:4]), int(C.PERIOD[1][:4])
-    for key, tp in sorted(tiles_for(pts).items()):
+    for key, tp in tile_order(tiles_for(pts)):
         for y in range(y0, y1 + 1):                # edge events are excluded anyway (EDGE_DAYS)
             if not (SCAN / f"{key}_{y}.npz").exists():
                 jobs.append((key, y, tp))
@@ -258,8 +277,14 @@ def step_events():
     import numpy as np
     from .thresholds import rp_threshold
     pts = {p["point_id"]: p for p in _read_points()}
+    tiles = tiles_for(list(pts.values()))
+    done = complete_tiles(tiles)
+    if len(done) < len(tiles):
+        print(f"events: only {len(done)} of {len(tiles)} tiles complete; using those (random tile order, DEVIATIONS.md #7)")
     parts = {}
     for f in sorted(SCAN.glob("*.npz")):
+        if f.stem.rsplit("_", 1)[0] not in done:
+            continue
         z = np.load(f)
         for pid, row in zip(z["ids"], z["q"]):
             parts.setdefault(str(pid), []).append((z["days"], row))
@@ -323,7 +348,7 @@ def step_events():
     _write_csv(OUT / "placebo_dates.csv", placebo, ["event_id", "point_id", "placebo_date"])
     check = events.rq3_sample(main, [e["episode"] for e in main], 100, C.PERIOD[0], C.SEED + 1)
     _write_csv(OUT / "blind_check_100.csv", check, ["event_id", "point_id", "lat", "lon", "country", "peak_date"])
-    summary = {"points": len(pts), "points_with_series": len(series), "events_found": len(allev),
+    summary = {"points": len(pts), "tiles": len(tiles), "tiles_complete": sorted(done), "points_with_series": len(series), "events_found": len(allev),
                "excluded": counts, "main": len(main), "rq3": len(rq3), "placebo_dates": len(placebo),
                "episodes_main": len({e["episode"] for e in main}),
                "by_year": _count(main, lambda e: e["peak_date"][:4]),

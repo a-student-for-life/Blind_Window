@@ -231,3 +231,23 @@ class Scan(unittest.TestCase):
         self.assertEqual(len(cap), 10)
         self.assertEqual(cap, scan.cap_sample(evs, 10, 1))
         self.assertTrue(all(sum(e["peak_date"][:4] == y for e in cap) in (2, 3) for y in ("2017", "2018", "2019", "2020")))
+
+
+class TileOrder(unittest.TestCase):
+    def test_seeded_started_first_and_complete(self):
+        import tempfile
+        from pathlib import Path
+        from study import scan
+        tiles = {f"{a}_{b}": [] for a in (0, 10, 20) for b in (70, 80, 90)}
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / "20_90_2017.npz").write_bytes(b"")
+            o1 = [k for k, _ in scan.tile_order(tiles, d)]
+            o2 = [k for k, _ in scan.tile_order(tiles, d)]
+            self.assertEqual(o1, o2)
+            self.assertEqual(o1[0], "20_90")
+            self.assertEqual(sorted(o1), sorted(tiles))
+            self.assertEqual(scan.complete_tiles(tiles, d), set())
+            for y in range(2017, 2025):
+                (d / f"0_70_{y}.npz").write_bytes(b"")
+            self.assertEqual(scan.complete_tiles(tiles, d), {"0_70"})

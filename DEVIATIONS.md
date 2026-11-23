@@ -111,3 +111,16 @@ run through sections 5 and 7. **Problem.** Section 7 on placebo dates needs abou
 forecast downloads (about 40 min each), which do not fit before the deadline (see #3).
 **New rule.** Placebo dates are run through section 5 (RQ1 contrast) only. **Effect.** The check
 "a forecast gain that appears only on placebo dates" is not made; stated as a limitation.
+
+## 7. Random tile order for the event scan, 23 Nov 2026
+
+Recorded on 23 Nov 2026, before any main-set event was found (1 of 144 tile-years downloaded).
+**Old rule.** Section 3: the whole region is scanned. **Problem.** Each 10° tile-year request
+waited about 6.5 h in the Copernicus EWDS queue, so the full scan may not finish before the
+deadline. (Open-Meteo's copy of the GloFAS reanalysis was tested as a faster route and rejected:
+it returned a neighbouring cell at 8 of the 10 pilot river points.) **New rule.** Tiles are
+downloaded in a seeded random order (SEED), all years of a tile together. If the scan is stopped
+at a cut-off date, events come only from tiles with every year downloaded; the number of tiles
+used is reported (`events_summary.json`). **Effect.** None if the scan finishes. Otherwise the
+events are a random cluster sample of tiles instead of the whole region, and country and basin
+coverage is reported as is.
