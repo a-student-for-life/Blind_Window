@@ -218,57 +218,89 @@ def _extract(nc, pts, year, target):
     ds.close()
 
 
-def tile_order(tiles, scan_dir=None):
-    """Tiles in a seeded random order, all years of a tile together, so the tiles finished by any
-    cut-off date are a random sample of the region with complete records (DEVIATIONS.md #7).
-    Tiles that already have a finished year go first, so no started tile is left half done."""
+def year_order(y0, y1, seed=None):
+    """Years in a seeded random order, so the years finished by any cut-off are a random sample."""
     import random
-    scan_dir = scan_dir or SCAN
-    keys = sorted(tiles)
-    random.Random(C.SEED).shuffle(keys)
-    started = [k for k in keys if any(scan_dir.glob(f"{k}_*.npz"))]
-    return [(k, tiles[k]) for k in started + [k for k in keys if k not in started]]
+    ys = list(range(y0, y1 + 1))
+    random.Random(C.SEED if seed is None else seed).shuffle(ys)
+    return ys
 
 
-def complete_tiles(tiles, scan_dir=None):
-    """Tiles with every year of the study period downloaded."""
-    scan_dir = scan_dir or SCAN
-    y0, y1 = int(C.PERIOD[0][:4]), int(C.PERIOD[1][:4])
-    return {k for k in tiles if all((scan_dir / f"{k}_{y}.npz").exists() for y in range(y0, y1 + 1))}
+def region_area(tiles, deg=TILE_DEG):
+    """[N, W, S, E] box covering every tile."""
+    lat0 = [int(k.split("_")[0]) for k in tiles]
+    lon0 = [int(k.split("_")[1]) for k in tiles]
+    return [max(lat0) + deg, min(lon0), min(lat0), max(lon0) + deg]
+
+
+def _region_request(tiles, year):
+    ds, req = fetch.glofas_reanalysis_request(year, 0, 0)
+    req["area"] = region_area(tiles)
+    return ds, req
 
 
 def step_download(keep_raw=False):
+    """One whole-region request per year (DEVIATIONS.md #7: the EWDS queue admits about one request
+    every 5-12 h whatever its area, and its size limit counts days, not area). Each year file is
+    cut into the per-tile series the events step reads. Per-tile files already in the cache
+    (from the earlier tile-by-tile download) are used first."""
     pts = _read_points()
-    jobs = []
+    tiles = tiles_for(pts)
     y0, y1 = int(C.PERIOD[0][:4]), int(C.PERIOD[1][:4])
-    for key, tp in tile_order(tiles_for(pts)):
-        for y in range(y0, y1 + 1):                # edge events are excluded anyway (EDGE_DAYS)
-            if not (SCAN / f"{key}_{y}.npz").exists():
-                jobs.append((key, y, tp))
-    print(f"download: {len(jobs)} tile-years to fetch ({len(tiles_for(pts))} tiles), {WORKERS} at a time")
     SCAN.mkdir(parents=True, exist_ok=True)
     CACHE.mkdir(parents=True, exist_ok=True)
 
-    def one(job):
-        key, y, tp = job
-        nc = CACHE / f"scan_{key}_{y}.nc"
+    def log(**line):
+        line["at"] = datetime.now().isoformat()
+        with open(SCAN / "download_log.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps(line) + "\n")
+        print(line, flush=True)
+
+    for key, tp in tiles.items():                   # leftovers of the tile-by-tile route
+        for y in range(y0, y1 + 1):
+            nc, out = CACHE / f"scan_{key}_{y}.nc", SCAN / f"{key}_{y}.npz"
+            if nc.exists() and not out.exists():
+                try:
+                    _extract(nc, tp, y, out)
+                    if not keep_raw:
+                        nc.unlink()
+                    log(tile=key, year=y, status="ok (cached tile file)")
+                except Exception as e:
+                    log(tile=key, year=y, status=f"error {type(e).__name__}: {str(e)[:200]}")
+
+    jobs = [y for y in year_order(y0, y1) if any(not (SCAN / f"{k}_{y}.npz").exists() for k in tiles)]
+    print(f"download: {len(jobs)} region-years to fetch ({len(tiles)} tiles each), {WORKERS} at a time")
+
+    def one(y):
+        nc = CACHE / f"scan_region_{y}.nc"
         t = time.time()
         try:
             if not nc.exists():
-                fetch.retrieve_ewds(_tile_request(key, y), nc)
-            _extract(nc, tp, y, SCAN / f"{key}_{y}.npz")
+                fetch.retrieve_ewds(_region_request(tiles, y), nc)
+            for key, tp in tiles.items():
+                out = SCAN / f"{key}_{y}.npz"
+                if not out.exists():
+                    _extract(nc, tp, y, out)
             if not keep_raw:
                 nc.unlink()
             msg = "ok"
         except Exception as e:                      # logged; the next run retries it
             msg = f"error {type(e).__name__}: {str(e)[:200]}"
-        line = {"tile": key, "year": y, "seconds": round(time.time() - t), "status": msg, "at": datetime.now().isoformat()}
-        with open(SCAN / "download_log.jsonl", "a", encoding="utf-8") as f:
-            f.write(json.dumps(line) + "\n")
-        print(f"{key} {y}: {msg} ({line['seconds']} s)", flush=True)
+        log(region=True, year=y, seconds=round(time.time() - t), status=msg)
 
     with ThreadPoolExecutor(WORKERS) as ex:
         list(ex.map(one, jobs))
+
+
+def usable_files(tiles, scan_dir=None):
+    """Series files the events step may use: every year of a complete tile, and every tile of a
+    complete year, so no point has a year missing from the middle of its record by accident."""
+    scan_dir = scan_dir or SCAN
+    y0, y1 = int(C.PERIOD[0][:4]), int(C.PERIOD[1][:4])
+    have = {(k, y) for k in tiles for y in range(y0, y1 + 1) if (scan_dir / f"{k}_{y}.npz").exists()}
+    full_t = {k for k in tiles if all((k, y) in have for y in range(y0, y1 + 1))}
+    full_y = {y for y in range(y0, y1 + 1) if all((k, y) in have for k in tiles)}
+    return {(k, y) for k, y in have if k in full_t or y in full_y}, full_t, full_y
 
 
 # ------------------------------------------------------------------ step 3: events
@@ -278,12 +310,12 @@ def step_events():
     from .thresholds import rp_threshold
     pts = {p["point_id"]: p for p in _read_points()}
     tiles = tiles_for(list(pts.values()))
-    done = complete_tiles(tiles)
-    if len(done) < len(tiles):
-        print(f"events: only {len(done)} of {len(tiles)} tiles complete; using those (random tile order, DEVIATIONS.md #7)")
+    use, done, years_done = usable_files(tiles)
+    print(f"events: {len(years_done)} complete years, {len(done)} complete tiles of {len(tiles)} (DEVIATIONS.md #7)")
     parts = {}
     for f in sorted(SCAN.glob("*.npz")):
-        if f.stem.rsplit("_", 1)[0] not in done:
+        k, y = f.stem.rsplit("_", 1)
+        if (k, int(y)) not in use:
             continue
         z = np.load(f)
         for pid, row in zip(z["ids"], z["q"]):
@@ -348,7 +380,7 @@ def step_events():
     _write_csv(OUT / "placebo_dates.csv", placebo, ["event_id", "point_id", "placebo_date"])
     check = events.rq3_sample(main, [e["episode"] for e in main], 100, C.PERIOD[0], C.SEED + 1)
     _write_csv(OUT / "blind_check_100.csv", check, ["event_id", "point_id", "lat", "lon", "country", "peak_date"])
-    summary = {"points": len(pts), "tiles": len(tiles), "tiles_complete": sorted(done), "points_with_series": len(series), "events_found": len(allev),
+    summary = {"points": len(pts), "tiles": len(tiles), "tiles_complete": sorted(done), "years_complete": sorted(years_done), "points_with_series": len(series), "events_found": len(allev),
                "excluded": counts, "main": len(main), "rq3": len(rq3), "placebo_dates": len(placebo),
                "episodes_main": len({e["episode"] for e in main}),
                "by_year": _count(main, lambda e: e["peak_date"][:4]),

@@ -112,15 +112,18 @@ forecast downloads (about 40 min each), which do not fit before the deadline (se
 **New rule.** Placebo dates are run through section 5 (RQ1 contrast) only. **Effect.** The check
 "a forecast gain that appears only on placebo dates" is not made; stated as a limitation.
 
-## 7. Random tile order for the event scan, 23 Nov 2026
+## 7. One whole-region request per year for the event scan, 23-24 Nov 2026
 
-Recorded on 23 Nov 2026, before any main-set event was found (1 of 144 tile-years downloaded).
-**Old rule.** Section 3: the whole region is scanned. **Problem.** Each 10° tile-year request
-waited about 6.5 h in the Copernicus EWDS queue, so the full scan may not finish before the
-deadline. (Open-Meteo's copy of the GloFAS reanalysis was tested as a faster route and rejected:
-it returned a neighbouring cell at 8 of the 10 pilot river points.) **New rule.** Tiles are
-downloaded in a seeded random order (SEED), all years of a tile together. If the scan is stopped
-at a cut-off date, events come only from tiles with every year downloaded; the number of tiles
-used is reported (`events_summary.json`). **Effect.** None if the scan finishes. Otherwise the
-events are a random cluster sample of tiles instead of the whole region, and country and basin
-coverage is reported as is.
+Recorded on 23-24 Nov 2026, before any main-set event was found (2 of 144 tile-year pieces
+downloaded). **Old rule.** Section 3: the whole region is scanned; the code asked EWDS for one
+10-degree tile and one year at a time (144 requests). **Problem.** Each EWDS request now waits
+about 5-12 h in the queue whatever its size (a one-point, one-year test waited almost 3 h without
+starting), so 144 requests would take about a month. Open-Meteo's copy of the GloFAS reanalysis was
+tested as a faster route and rejected: it returned a neighbouring cell at 8 of the 10 pilot river
+points. EWDS refuses 8 years for one tile ("request too large") but accepts one year for the whole
+region, so its size limit counts days, not area. **New rule.** Same data and same extraction: one
+request per year for the box covering all tiles (8 requests), years in a seeded random order (SEED);
+each year file is cut into the per-tile series. If the scan is stopped at a cut-off date, events come
+only from complete years (and complete tiles); the years used are reported (`events_summary.json`).
+**Effect.** None if all 8 years arrive. Otherwise the event set covers a random subset of years,
+reported as such.

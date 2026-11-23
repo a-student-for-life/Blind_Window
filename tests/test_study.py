@@ -233,21 +233,23 @@ class Scan(unittest.TestCase):
         self.assertTrue(all(sum(e["peak_date"][:4] == y for e in cap) in (2, 3) for y in ("2017", "2018", "2019", "2020")))
 
 
-class TileOrder(unittest.TestCase):
-    def test_seeded_started_first_and_complete(self):
+class RegionYears(unittest.TestCase):
+    def test_area_years_usable(self):
         import tempfile
         from pathlib import Path
         from study import scan
-        tiles = {f"{a}_{b}": [] for a in (0, 10, 20) for b in (70, 80, 90)}
+        tiles = {"-10_100": [], "30_60": [], "0_120": []}
+        self.assertEqual(scan.region_area(tiles), [40, 60, -10, 130])
+        ys = scan.year_order(2017, 2024)
+        self.assertEqual(sorted(ys), list(range(2017, 2025)))
+        self.assertEqual(ys, scan.year_order(2017, 2024))
         with tempfile.TemporaryDirectory() as d:
             d = Path(d)
-            (d / "20_90_2017.npz").write_bytes(b"")
-            o1 = [k for k, _ in scan.tile_order(tiles, d)]
-            o2 = [k for k, _ in scan.tile_order(tiles, d)]
-            self.assertEqual(o1, o2)
-            self.assertEqual(o1[0], "20_90")
-            self.assertEqual(sorted(o1), sorted(tiles))
-            self.assertEqual(scan.complete_tiles(tiles, d), set())
-            for y in range(2017, 2025):
-                (d / f"0_70_{y}.npz").write_bytes(b"")
-            self.assertEqual(scan.complete_tiles(tiles, d), {"0_70"})
+            for k in tiles:
+                (d / f"{k}_2024.npz").write_bytes(b"")
+            (d / "-10_100_2017.npz").write_bytes(b"")
+            use, full_t, full_y = scan.usable_files(tiles, d)
+            self.assertEqual(full_y, {2024})
+            self.assertEqual(full_t, set())
+            self.assertNotIn(("-10_100", 2017), use)
+            self.assertEqual(len(use), 3)
