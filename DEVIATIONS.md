@@ -58,3 +58,24 @@ Everything else in section 7 is unchanged.
 is a weaker version of the cloud-aware forecast, so a gain over the baselines is, if anything,
 harder to show; a weather-forecast version is named as future work. Like baseline 3, later years
 are used for early events; nothing from the event's own year is used.
+
+## 3. Forecast test on a random subset, 23 Nov 2026
+
+Agreed by Janice on 23 Nov 2026. What had been seen: the pilot results, including the forecast
+test for P01, P02 and P05 (pilot events, excluded from the main results). What had not been seen:
+any main-set event, outcome or forecast.
+
+**Old rule.** Section 7: the forecast test runs on every main event from 15 Nov 2019 on, at leads
+of 3 days (main) and 1 and 5 days (secondary).
+
+**Problem.** Each GloFAS forecast is a separate download, and in the pilot each waited about
+40 minutes in the Copernicus queue (requests for two dates at once were refused). With up to
+800 events × 3 leads, the downloads would take about 33 days and end after the study deadline.
+
+**New rule.** The forecast test runs on a random subset of 200 main events whose peak is on or
+after 15 Nov 2019, drawn with seed 20261122, stratified by year, at most one event per episode,
+at L = 3 days. Leads 1 and 5 days run on the first 50 events of the same draw. The draw is made
+from the event list alone, before any forecast or outcome is downloaded, and committed. If fewer
+than 200 events qualify, all are used. RQ1 and RQ2 still use every main event.
+
+**Effect.** Wider confidence intervals for RQ3 than with all events; no change to RQ1 and RQ2.

@@ -59,6 +59,8 @@ S2_CLOUD_FORECAST_USABLE_BELOW = 30.0   # same as blindwindow.config.CLOUD_USABL
 NEXT_S1_LOOKBACK_DAYS = 36
 CLIMATOLOGY_STEP_DAYS = 3
 HIT_TOL_H = 12
+RQ3_SAMPLE_N = 200        # deviation 3: random subset for the forecast test (lead 3 d)
+RQ3_SECONDARY_N = 50      # first 50 of the same draw also at leads 1 and 5 d
 
 # Section 8: reading the results
 MIN_USEFUL_GAIN_H = 12

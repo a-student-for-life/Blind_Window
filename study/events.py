@@ -95,3 +95,31 @@ def near_pilot(ev, pilots, km=C.PILOT_EXCLUSION_KM, days=C.PILOT_EXCLUSION_DAYS)
 def in_plan_gap(t0, satellite, gaps=C.PLAN_GAPS):
     d = t0.date() if isinstance(t0, datetime) else _d(t0)
     return any(_d(a) <= d <= _d(b) for a, b in gaps.get(satellite, []))
+
+
+def rq3_sample(events, episode_ids, n, start, seed):
+    """Deviation 3: seeded random subset for the forecast test. events: dicts with peak_date
+    (ISO string or date) and an id; episode_ids aligned with events. Only peaks on or after start;
+    at most one event per episode; stratified by year (proportional, largest remainder).
+    Returns the chosen events in a seeded random order (the first ones also run at leads 1, 5)."""
+    import random
+    rng = random.Random(seed)
+    order = list(range(len(events)))
+    rng.shuffle(order)
+    seen, pool = set(), []
+    for i in order:
+        if str(events[i]["peak_date"])[:10] < start or episode_ids[i] in seen:
+            continue
+        seen.add(episode_ids[i])
+        pool.append(events[i])
+    if len(pool) <= n:
+        return pool
+    by_year = {}
+    for e in pool:
+        by_year.setdefault(str(e["peak_date"])[:4], []).append(e)
+    quota = {y: n * len(v) / len(pool) for y, v in by_year.items()}
+    take = {y: int(q) for y, q in quota.items()}
+    for y in sorted(quota, key=lambda y: (-(quota[y] - take[y]), y))[: n - sum(take.values())]:
+        take[y] += 1
+    chosen = {id(e) for y, v in by_year.items() for e in v[: take[y]]}
+    return [e for e in pool if id(e) in chosen]

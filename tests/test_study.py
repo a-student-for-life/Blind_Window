@@ -194,3 +194,17 @@ class CloudClimatology(unittest.TestCase):
         self.assertEqual(f["t_hat"], T("2020-07-07T12:00:00"))
         f = hindcast.forecast(tau, "2020-07-04", passes, ends, cloud_look=lambda t: 10.0)
         self.assertEqual(f["t_hat"], T("2020-07-05T04:00:00"))
+
+
+class Rq3Sample(unittest.TestCase):
+    def test_sample(self):
+        evs = [{"id": i, "peak_date": f"{2018 + i % 5}-07-{1 + i % 28:02d}"} for i in range(100)]
+        eps = [i // 2 for i in range(100)]            # pairs share an episode
+        s = events.rq3_sample(evs, eps, 20, "2019-11-15", 7)
+        self.assertEqual(len(s), 20)
+        self.assertTrue(all(e["peak_date"] >= "2019-11-15" for e in s))
+        self.assertEqual(len({eps[e["id"]] for e in s}), 20)
+        self.assertEqual(s, events.rq3_sample(evs, eps, 20, "2019-11-15", 7))   # reproducible
+        years = [e["peak_date"][:4] for e in events.rq3_sample(evs, list(range(100)), 20, "2019-11-15", 7)]
+        self.assertEqual(sorted(set(years)), ["2020", "2021", "2022"])   # 20 each in the pool
+        self.assertTrue(all(6 <= years.count(y) <= 7 for y in set(years)))
