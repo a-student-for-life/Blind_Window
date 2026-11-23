@@ -346,7 +346,7 @@ def stage_forecast(ev):
     t_obs = _dt(ob["first_usable_time"]) or inst["t0"] + timedelta(hours=C.CENSOR_H)
     site = [(_d(d), bw) for d, bw in clim["rows"]]
     leads = {}
-    for L in (C.LEAD_DAYS_MAIN,) + tuple(C.LEAD_DAYS_SECONDARY):
+    for L in ev.get("leads") or ((C.LEAD_DAYS_MAIN,) + tuple(C.LEAD_DAYS_SECONDARY)):
         tau = hindcast.issue_time(peak, L)
         fc_path = CACHE / f"glofas_fc_{ev['id']}_{tau:%Y%m%d}.nc"
         if not fc_path.exists():
@@ -425,8 +425,9 @@ RUNNERS = {"glofas": stage_glofas, "floodplain": stage_floodplain, "observed": s
 
 # ------------------------------------------------------------------ driver and report
 
-def run(only=None, stage=None):
-    for ev in pilots():
+def run(only=None, stage=None, evs=None, skip=None):
+    """evs: events to run (default the pilot list); skip(ev, stage) -> reason string to skip a stage."""
+    for ev in (evs if evs is not None else pilots()):
         if only and ev["id"] not in only:
             continue
         for st in STAGES:
@@ -436,7 +437,8 @@ def run(only=None, stage=None):
                 continue
             t0 = time.time()
             try:
-                res = RUNNERS[st](ev)
+                why = skip(ev, st) if skip else None
+                res = {"skipped": why} if why else RUNNERS[st](ev)
                 save(ev["id"], st, res)
                 status, msg = "ok", ""
             except NotReady as e:
@@ -453,7 +455,8 @@ def run(only=None, stage=None):
             print(f"{ev['id']:4s} {st:12s} {status:9s} {secs:7.1f}s {msg[:120]}", flush=True)
             if status != "ok":
                 break               # later stages of this event depend on this one
-    report()
+    if evs is None:
+        report()
 
 
 def report():
