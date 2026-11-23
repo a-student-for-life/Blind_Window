@@ -50,7 +50,11 @@ RQ2_WINDOW = (-10, 30)        # days around t0
 # Section 7: forecast test
 LEAD_DAYS_MAIN = 3
 LEAD_DAYS_SECONDARY = (1, 5)
-CLOUD_FORECAST_MAX_H = 15 * 24
+CLOUD_FORECAST_MAX_H = 15 * 24        # TIGGE only (not used since deviation 2)
+CLOUD_SOURCE = "climatology"          # deviation 2: usual cloudiness instead of TIGGE
+CLOUD_CLIM_HALF_DAYS = 15              # +/- days of year around each S2 pass
+CLOUD_CLIM_MIN_PASSES = 3              # fewer past S2 passes -> cloud unknown (not usable)
+CLOUD_CLIM_WINDOW = (-25, 50)          # days around the peak fetched in each other year
 S2_CLOUD_FORECAST_USABLE_BELOW = 30.0   # same as blindwindow.config.CLOUD_USABLE_BELOW
 NEXT_S1_LOOKBACK_DAYS = 36
 CLIMATOLOGY_STEP_DAYS = 3

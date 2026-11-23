@@ -215,7 +215,7 @@ secondary L = 1 and 5. Only data available at τ is used.
   ensemble median within the 30-day horizon.
 - **Passes:** the plans available at τ (section 6), extended beyond each plan's end by the repeat
   cycle (`plans.project`: 12 days S1, 10 days S2).
-- **Cloud:** TIGGE ECMWF ensemble mean total cloud cover at the point, linearly interpolated to each
+- **Cloud** (replaced by usual cloudiness at the point, DEVIATIONS.md #2): TIGGE ECMWF ensemble mean total cloud cover at the point, linearly interpolated to each
   S2 pass time, up to 15 days ahead. Beyond 15 days an S2 pass is "unknown" and is not counted as
   usable (the existing rule in `predictor.py`).
 - **Rule:** `predictor.predict` unchanged: first S1 pass, or first S2 pass with forecast cloud below

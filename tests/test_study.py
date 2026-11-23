@@ -165,3 +165,32 @@ class Guard(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SegmentMatch(unittest.TestCase):
+    def test_actual_inside_long_segment(self):
+        planned = [{"satellite": "S2A", "time": T("2024-07-04T04:10:00"), "end": T("2024-07-04T04:50:00")}]
+        actual = [{"satellite": "S2A", "time": T("2024-07-04T04:41:00"), "usable": False}]
+        c = plan_match.completeness(planned, actual)
+        self.assertEqual(c["n_matched"], 1)
+        self.assertEqual(plan_match.completeness([{**planned[0], "end": None}], actual)["n_matched"], 0)
+
+
+class CloudClimatology(unittest.TestCase):
+    def test_usual_cloudiness(self):
+        past = [(T("2019-07-01T04:40:00"), 80.0), (T("2021-07-10T04:40:00"), 60.0),
+                (T("2022-06-25T04:40:00"), 100.0), (T("2020-07-05T04:40:00"), 0.0),   # event year: left out
+                (T("2019-09-01T04:40:00"), 0.0)]                                      # too far in the year
+        look = hindcast.cloud_climatology_factory(past, 2020)
+        self.assertAlmostEqual(look(T("2020-07-04T04:40:00")), 80.0)
+        self.assertIsNone(hindcast.cloud_climatology_factory(past[:2], 2020)(T("2020-07-04T04:40:00")))
+
+    def test_forecast_with_usual_cloudiness(self):
+        tau = T("2020-07-01T00:00:00")
+        passes = [{"satellite": "S2A", "time": T("2020-07-05T04:00:00"), "kind": "optical", "mode": None, "source": "planned"},
+                  {"satellite": "S1A", "time": T("2020-07-07T12:00:00"), "kind": "sar", "mode": None, "source": "planned"}]
+        ends = {"S2A": T("2020-07-20T00:00:00"), "S1A": T("2020-07-20T00:00:00")}
+        f = hindcast.forecast(tau, "2020-07-04", passes, ends, cloud_look=lambda t: 85.0)
+        self.assertEqual(f["t_hat"], T("2020-07-07T12:00:00"))
+        f = hindcast.forecast(tau, "2020-07-04", passes, ends, cloud_look=lambda t: 10.0)
+        self.assertEqual(f["t_hat"], T("2020-07-05T04:00:00"))

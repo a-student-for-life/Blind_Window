@@ -16,7 +16,9 @@ Stages, in order (each needs the ones before it):
   asf         Sentinel-1 RAW datatake records (RQ2 actual, baseline 2 history)
   plans       planned passes over the floodplain point from the archived ESA plans (section 6)
   climatology site climatology for baseline 3 (same month, other years, every 3rd day)
-  forecast    GloFAS forecast + TIGGE cloud at leads 1, 3, 5 days -> forecast and baselines (section 7)
+  cloudclim   usual cloudiness at the point: S2 passes of the other years around the same dates
+              (deviation 2, replaces the TIGGE cloud forecast)
+  forecast    GloFAS forecast + usual cloudiness at leads 1, 3, 5 days -> forecast and baselines (section 7)
 """
 import argparse
 import json
@@ -33,7 +35,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "pilot" / "out"
 CACHE = ROOT / "data" / "study" / "cache"
 UTC = timezone.utc
-STAGES = ["glofas", "floodplain", "observed", "asf", "plans", "climatology", "forecast"]
+STAGES = ["glofas", "floodplain", "observed", "asf", "plans", "climatology", "cloudclim", "forecast"]
 
 
 class NotReady(RuntimeError):
@@ -208,12 +210,30 @@ def stage_plans(ev):
     per_plan = []
     for r in idx:
         fps = plan_index.load(r)
-        passes = bw_plans.passes_over(fps, fp["lat"], fp["lon"])
+        passes = planned_segments(fps, fp["lat"], fp["lon"])
         per_plan.append({"satellite": r["satellite"], "issued": r["issued"], "valid_to": r["valid_to"],
                          "member": r["member"], "zip_mtime": r["zip_mtime"], "n_footprints": len(fps),
-                         "passes": [{"satellite": p["satellite"], "time": p["time"], "kind": p["kind"]}
-                                    for p in passes]})
+                         "passes": passes})
     return {"plans": per_plan, "sats_present": sorted({p["satellite"] for p in per_plan})}
+
+
+def planned_segments(fps, lat, lon):
+    """Plan segments containing the point, merged per satellite within CLUSTER_HOURS. Keeps the
+    segment start AND end: an S2 datatake segment can start many minutes before it reaches the
+    point, so matching to actual acquisitions uses the whole interval (pilot finding, 23 Nov 2026)."""
+    from blindwindow import plans as bw_plans
+    from blindwindow.config import CLUSTER_HOURS
+    hits = sorted((f for f in fps if bw_plans.contains(f["polygon"], lon, lat)),
+                  key=lambda f: (f["satellite"], f["start"]))
+    out = []
+    for f in hits:
+        last = out[-1] if out else None
+        if last and last["satellite"] == f["satellite"] and f["start"] - last["time"] <= timedelta(hours=CLUSTER_HOURS):
+            last["end"] = max(last["end"], f["end"])
+            continue
+        out.append({"satellite": f["satellite"], "time": f["start"], "end": f["end"],
+                    "kind": "sar" if f["satellite"].startswith("S1") else "optical"})
+    return out
 
 
 def planned_as_of(plans_json, t, lead_h=0):
@@ -243,7 +263,8 @@ def rq2(ev):
             tq = _dt(q["time"])
             if not lo <= tq <= hi or p["issued"] > tq - timedelta(hours=C.PLAN_LEAD_H):
                 continue
-            planned.setdefault((q["satellite"], tq.replace(second=0, microsecond=0)), {"satellite": q["satellite"], "time": tq})
+            planned.setdefault((q["satellite"], tq.replace(second=0, microsecond=0)),
+                               {"satellite": q["satellite"], "time": tq, "end": _dt(q.get("end")) or tq})
     planned = list(planned.values())
     s1_actual = [{"satellite": a["satellite"], "time": _dt(a["time"])} for a in asf["passes"] if lo <= _dt(a["time"]) <= hi]
     usable = {(a["satellite"], _dt(a["time"]).replace(second=0, microsecond=0)): a["usable"] for a in ob["acquisitions"]}
@@ -283,15 +304,40 @@ def stage_climatology(ev):
     return {"month": month, "rows": rows}
 
 
+def stage_cloudclim(ev):
+    """Deviation 2: S2 passes over the floodplain point in the other study years, from
+    CLOUD_CLIM_WINDOW days around the peak's calendar date, with their cloudy share (%)."""
+    guard.require_outcome_access([ev["id"]])
+    e, inst, fp = _need_event(ev)
+    fetch.init_ee()
+    peak = _d(e["peak_date"])
+    y0, y1 = int(C.PERIOD[0][:4]), int(C.PERIOD[1][:4])
+    rows = []
+    for y in range(y0, y1 + 1):
+        if y == peak.year:
+            continue
+        try:
+            centre = peak.replace(year=y)
+        except ValueError:                      # 29 Feb
+            centre = peak.replace(year=y, day=28)
+        start = datetime(centre.year, centre.month, centre.day, tzinfo=UTC) + timedelta(days=C.CLOUD_CLIM_WINDOW[0])
+        end = datetime(centre.year, centre.month, centre.day, tzinfo=UTC) + timedelta(days=C.CLOUD_CLIM_WINDOW[1])
+        for a in observed.ee_acquisitions(fp["lat"], fp["lon"], start, end):
+            if a["mission"] == "S2":
+                rows.append((a["time"], round(100 * (1 - a["valid_share"]), 1)))
+    return {"years_left_out": [peak.year], "passes": rows}
+
+
 def stage_forecast(ev):
     guard.require_outcome_access([ev["id"]])
     e, inst, fp = _need_event(ev)
     peak = _d(e["peak_date"])
     if peak < date.fromisoformat(C.RQ3_START):
         return {"skipped": "peak before the GloFAS forecast archive (RQ1/RQ2 only)"}
-    pj, asf, clim, ob = (load(ev["id"], s) for s in ("plans", "asf", "climatology", "observed"))
-    if not (pj and asf and clim and ob):
-        raise NotReady("needs plans, asf, climatology and observed first")
+    pj, asf, clim, ob, cc = (load(ev["id"], s) for s in ("plans", "asf", "climatology", "observed", "cloudclim"))
+    if not (pj and asf and clim and ob and cc):
+        raise NotReady("needs plans, asf, climatology, cloudclim and observed first")
+    cloud_look = hindcast.cloud_climatology_factory([(_dt(t), c) for t, c in cc["passes"]], peak.year)
     g = load(ev["id"], "glofas")
     t_obs = _dt(ob["first_usable_time"]) or inst["t0"] + timedelta(hours=C.CENSOR_H)
     site = [(_d(d), bw) for d, bw in clim["rows"]]
@@ -303,9 +349,8 @@ def stage_forecast(ev):
             fetch.retrieve_ewds(fetch.glofas_forecast_request(tau.date(), g["cell"][0], g["cell"][1]), fc_path)
         fc_dates, members = forecast_members(fc_path, g["cell"][0], g["cell"][1], tau)
         pred_peak = hindcast.predicted_peak(fc_dates, members)
-        cloud = tigge_cloud(ev, tau, fp["lat"], fp["lon"])
         passes, ends = planned_as_of(pj["plans"], tau)
-        f = hindcast.forecast(tau, pred_peak, passes, ends, cloud)
+        f = hindcast.forecast(tau, pred_peak, passes, ends, cloud_look=cloud_look)
         past_s1 = [{"satellite": a["satellite"], "time": _dt(a["time"])} for a in asf["passes"]]
         preds = {
             "blind_window": f["t_hat"],
@@ -316,7 +361,8 @@ def stage_forecast(ev):
         err = {k: (None if v is None else round(min(abs((v - t_obs).total_seconds()) / 3600, C.CENSOR_H), 1))
                for k, v in preds.items()}
         leads[str(L)] = {"tau": tau, "pred_peak_date": pred_peak, "obs_peak_date": e["peak_date"],
-                         "predictions": preds, "abs_err_h": err, "n_cloud_steps": len(cloud)}
+                         "predictions": preds, "abs_err_h": err, "cloud_source": C.CLOUD_SOURCE,
+                         "n_cloud_passes": len(cc["passes"])}
     return {"t_obs": t_obs, "leads": leads}
 
 
@@ -360,7 +406,8 @@ def forecast_members(path_, lat, lon, tau):
 
 
 def tigge_cloud(ev, tau, lat, lon):
-    """[(valid_time, tcc %)] ensemble mean at the point from the TIGGE forecast issued at tau."""
+    """Not used since deviation 2 (kept for a possible later TIGGE check).
+    [(valid_time, tcc %)] ensemble mean at the point from the TIGGE forecast issued at tau."""
     target = CACHE / f"tigge_{ev['id']}_{tau:%Y%m%d}.grib"
     if not target.exists():
         fetch.retrieve_tigge_ecds(tau.date(), lat, lon, target)
@@ -369,7 +416,7 @@ def tigge_cloud(ev, tau, lat, lon):
 
 RUNNERS = {"glofas": stage_glofas, "floodplain": stage_floodplain, "observed": stage_observed,
            "asf": stage_asf, "plans": stage_plans, "climatology": stage_climatology,
-           "forecast": stage_forecast}
+           "cloudclim": stage_cloudclim, "forecast": stage_forecast}
 
 
 # ------------------------------------------------------------------ driver and report

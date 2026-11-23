@@ -16,7 +16,8 @@ def plan_available(plans, t, lead_h=C.PLAN_LEAD_H):
 
 
 def match(planned, actual, tol_min=C.MATCH_TOL_MIN):
-    """One-to-one greedy matching by time within tol_min minutes, same satellite.
+    """One-to-one greedy matching, same satellite: an actual acquisition matches a planned segment
+    when its time falls inside the segment [time, end] or within tol_min minutes of either end.
     planned/actual: dicts with satellite, time. Returns (pairs, unplanned_actual, unacquired_planned)."""
     tol = timedelta(minutes=tol_min)
     free = sorted(range(len(actual)), key=lambda i: actual[i]["time"])
@@ -27,7 +28,8 @@ def match(planned, actual, tol_min=C.MATCH_TOL_MIN):
             a = actual[i]
             if i in used or a["satellite"] != p["satellite"]:
                 continue
-            d = abs(a["time"] - p["time"])
+            end = p.get("end") or p["time"]
+            d = timedelta(0) if p["time"] <= a["time"] <= end else min(abs(a["time"] - p["time"]), abs(a["time"] - end))
             if d <= tol and (best is None or d < best[0]):
                 best = (d, i)
         if best:

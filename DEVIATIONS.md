@@ -31,3 +31,30 @@ still accepts the login, but no longer grants TIGGE access, and its licence page
 steps to 15 days) are retrieved from the ECDS (`tigge-forecasts`) with an ECDS API key.
 
 **Effect.** None on the analysis: same data, different download route.
+
+## 2. Usual cloudiness instead of the TIGGE cloud forecast, 23 Nov 2026
+
+Agreed by Janice on 23 Nov 2026. What had been seen: pilot observed blind windows, plan matches
+and site climatology for the 10 pilot events; GloFAS forecasts for P01. What had not been seen:
+any TIGGE cloud data, any forecast-test error, any main-set outcome.
+
+**Old rule.** Section 7, Cloud: TIGGE ECMWF ensemble mean total cloud cover at the point,
+interpolated to each S2 pass time, up to 15 days ahead.
+
+**Problem.** Since late October 2026 the ECMWF Data Store queues TIGGE requests for many hours.
+In the pilot a single one-date request waited more than 8 hours without starting, and a second one
+was still queued the next morning. At one request per issue date the 800-event main run (about
+2,400 issue dates) cannot finish before the study deadline of 15 Dec 2026, and ECMWF warns that
+bulk resubmission can suspend the account.
+
+**New rule.** The cloud expected for an S2 pass is the site's usual cloudiness: the mean cloudy
+share (100 × (1 − clear share), section 5 rules) of the S2 passes over the same floodplain point
+within ±15 days of the same day of the year, in the other study years (2017–2024, the event's year
+left out). With fewer than 3 such passes the cloud is unknown and the pass is not counted as usable
+(as beyond 15 days before). The same 30% threshold applies, and there is no 15-day horizon.
+Everything else in section 7 is unchanged.
+
+**Effect.** RQ3 now tests "plans + usual cloudiness" rather than "plans + cloud forecast". This
+is a weaker version of the cloud-aware forecast, so a gain over the baselines is, if anything,
+harder to show; a weather-forecast version is named as future work. Like baseline 3, later years
+are used for early events; nothing from the event's own year is used.
