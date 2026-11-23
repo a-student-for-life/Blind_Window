@@ -84,6 +84,9 @@ off when GloFAS forecast the Jamuna 2020 peak 4–11 days late.
 - What a responder can expect after a monsoon flood peak: radar, and usually days later.
 - The plans are good enough to forecast the first radar pass; the hard part is the flood peak.
 - Sentinel-1 constellation: one satellite from 2022 to the Sentinel-1C era; compare years.
+- Expected reviewer point: in the monsoon the forecast reduces to "next planned Sentinel-1 pass after the predicted peak". Say so plainly: that simplicity is the point, and the baselines show how much the plans and the peak forecast add.
+- Free Sentinel data only: commercial SAR, Landsat and MODIS are not counted, so "blind" means blind for free high-resolution imagery.
+- Prior work to cite and contrast: Tarpanelli et al. 2022 (NHESS 22:2473), Munasinghe et al. 2023 (Commun. Earth Environ. 4:462). Re-check the literature before writing "first" (use "to our knowledge").
 - Limitations: GloFAS-defined floods (checked by the blind event check), floodplain point rule,
   cloud shadow not modelled, usable ≠ flood mapped, usual cloudiness instead of a weather forecast
   (DEVIATIONS #2), subset for RQ3.
