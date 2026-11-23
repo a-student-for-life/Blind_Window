@@ -208,3 +208,26 @@ class Rq3Sample(unittest.TestCase):
         years = [e["peak_date"][:4] for e in events.rq3_sample(evs, list(range(100)), 20, "2019-11-15", 7)]
         self.assertEqual(sorted(set(years)), ["2020", "2021", "2022"])   # 20 each in the pool
         self.assertTrue(all(6 <= years.count(y) <= 7 for y in set(years)))
+
+
+class Scan(unittest.TestCase):
+    def test_outlets(self):
+        from study import scan
+        # rows north->south (lat_up=-1): both cells of row 0 drain south (2) into row 1, which drains east (6) to a pit (5)
+        ldd = [[2, 2, None],
+               [6, 6, 5]]
+        o = scan.outlets(ldd, -1)
+        self.assertEqual(o[(0, 0)], (1, 2))
+        self.assertEqual(o[(0, 1)], (1, 2))
+        self.assertNotIn((0, 2), o)
+        self.assertEqual(scan.outlets([[6, 4]], -1)[(0, 0)] in [(0, 0), (0, 1)], True)   # loop guard ends
+
+    def test_tiles_and_cap(self):
+        from study import scan
+        t = scan.tiles_for([{"lat": 26.1, "lon": 91.7}, {"lat": -0.5, "lon": 101.0}, {"lat": 29.9, "lon": 99.9}])
+        self.assertEqual(sorted(t), ["-10_100", "20_90"])
+        evs = [{"event_id": f"E{i:03d}", "peak_date": f"{2017 + i % 4}-07-01"} for i in range(40)]
+        cap = scan.cap_sample(evs, 10, 1)
+        self.assertEqual(len(cap), 10)
+        self.assertEqual(cap, scan.cap_sample(evs, 10, 1))
+        self.assertTrue(all(sum(e["peak_date"][:4] == y for e in cap) in (2, 3) for y in ("2017", "2018", "2019", "2020")))

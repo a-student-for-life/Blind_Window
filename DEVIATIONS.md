@@ -79,3 +79,19 @@ from the event list alone, before any forecast or outcome is downloaded, and com
 than 200 events qualify, all are used. RQ1 and RQ2 still use every main event.
 
 **Effect.** Wider confidence intervals for RQ3 than with all events; no change to RQ1 and RQ2.
+
+## 4. Country and basin lookup through Earth Engine, 23 Nov 2026
+
+Recorded on 23 Nov 2026, while writing the event scan, before any main-set event was found.
+
+**Old rule.** Section 3: the study countries are taken from Natural Earth 1:10m admin-0.
+
+**Problem.** The scan already uses Earth Engine for the HydroBASINS level-4 basins; Natural Earth
+would be one more file to download by hand.
+
+**New rule.** Country of each river point from the US Department of State LSIB boundaries in Earth
+Engine (`USDOS/LSIB_SIMPLE/2017`), basin from `WWF/HydroSHEDS/v1/Basins/hybas_4`. A river point
+that falls outside every land polygon (some river mouths) is dropped, as before.
+
+**Effect.** Small differences at disputed or coastal borders only; the count of points per
+country is reported in `data/study/events_summary.json`.
