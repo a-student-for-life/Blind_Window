@@ -1,0 +1,15 @@
+{
+  "_about": "The 10 pilot events (ANALYSIS_PLAN.md section 13). Excluded from every main result, together with any main event within 50 km and 7 days. Seeds are approximate river locations; the pilot snaps each to the GloFAS cell, finds the peak inside `search_window` from the reanalysis, and records both in pilot/out/. Chosen by hand to cover both regions, all years, both S1B eras, an S1B plan gap and the three 2024 replay events.",
+  "events": [
+    {"id": "P01", "name": "Brahmaputra near Guwahati", "country": "IND", "lat": 26.175, "lon": 91.725, "search_window": ["2024-06-20", "2024-07-15"], "peak_date": "2024-07-01", "why": "Replay event, hand-checked; regression case (227.9 h)"},
+    {"id": "P02", "name": "Godavari lower reach", "country": "IND", "lat": 17.275, "lon": 81.675, "search_window": ["2024-07-15", "2024-08-05"], "peak_date": "2024-07-26", "why": "Replay failure case: real acquisition missing from plan"},
+    {"id": "P03", "name": "Ganges near Malda", "country": "IND", "lat": 24.775, "lon": 87.925, "search_window": ["2024-08-10", "2024-09-10"], "peak_date": "2024-08-26", "why": "Replay event, no pixel check yet"},
+    {"id": "P04", "name": "Kosi, Bihar", "country": "IND", "lat": 26.000, "lon": 86.600, "search_window": ["2017-08-05", "2017-08-31"], "peak_date": null, "why": "2017: S2 L1C cloud mask, S1A+S1B era"},
+    {"id": "P05", "name": "Brahmaputra (Jamuna) at Bahadurabad", "country": "BGD", "lat": 25.150, "lon": 89.700, "search_window": ["2020-06-25", "2020-08-10"], "peak_date": null, "why": "Long monsoon flood, RQ3 window, S1B era"},
+    {"id": "P06", "name": "Indus near Sukkur", "country": "PAK", "lat": 27.700, "lon": 68.850, "search_window": ["2022-08-15", "2022-09-30"], "peak_date": null, "why": "Post-S1B era, arid floodplain, west edge of area"},
+    {"id": "P07", "name": "Mekong near Kratie", "country": "KHM", "lat": 12.480, "lon": 106.010, "search_window": ["2018-08-01", "2018-09-15"], "peak_date": null, "why": "Southeast Asia, large slow flood"},
+    {"id": "P08", "name": "Chao Phraya near Nakhon Sawan", "country": "THA", "lat": 15.700, "lon": 100.130, "search_window": ["2021-09-15", "2021-10-31"], "peak_date": null, "why": "Southeast Asia, late season, S1B's last months"},
+    {"id": "P09", "name": "Ayeyarwady near Pyay", "country": "MMR", "lat": 18.820, "lon": 95.220, "search_window": ["2019-07-15", "2019-08-31"], "peak_date": null, "why": "2019: before the GloFAS forecast archive, tests RQ1-only path"},
+    {"id": "P10", "name": "Brahmaputra near Dibrugarh", "country": "IND", "lat": 27.480, "lon": 94.900, "search_window": ["2017-07-01", "2017-07-31"], "peak_date": null, "why": "July 2017: inside the S1B plan gap (4-25 July), tests exclusion 3"}
+  ]
+}

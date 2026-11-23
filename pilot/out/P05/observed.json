@@ -1,0 +1,197 @@
+{
+ "acquisitions": [
+  {
+   "time": "2020-07-03T04:51:44.531000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-07-03T23:55:49+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-07-05T04:41:51.054000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-07-08T04:51:46.506000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.14729927274056187,
+   "usable": false
+  },
+  {
+   "time": "2020-07-10T04:41:48.258000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-07-13T04:51:43.831000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-07-13T12:04:51+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-07-15T04:41:51.094000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-07-15T23:55:50+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-07-18T04:51:47.224000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-07-19T12:04:23+00:00",
+   "satellite": "S1B",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-07-20T04:41:48.126000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-07-21T23:54:58+00:00",
+   "satellite": "S1B",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-07-23T04:51:44.337000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.8649567847092784,
+   "usable": false
+  },
+  {
+   "time": "2020-07-25T04:41:51.967000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.6101505682856405,
+   "usable": false
+  },
+  {
+   "time": "2020-07-25T12:04:52+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-07-27T23:55:51+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-07-28T04:51:47.944000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-07-30T04:41:49.156000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-08-02T04:51:45.245000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.9590825201914994,
+   "usable": true
+  },
+  {
+   "time": "2020-08-04T04:41:52.411000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.38610715199356754,
+   "usable": false
+  },
+  {
+   "time": "2020-08-06T12:04:52+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-08-07T04:51:48.263000+00:00",
+   "satellite": "S2A",
+   "mission": "S2",
+   "valid_share": 0.7532228739538785,
+   "usable": false
+  },
+  {
+   "time": "2020-08-08T23:55:51+00:00",
+   "satellite": "S1A",
+   "mission": "S1",
+   "valid_share": 1,
+   "usable": true
+  },
+  {
+   "time": "2020-08-09T04:41:49.801000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.0,
+   "usable": false
+  },
+  {
+   "time": "2020-08-12T04:51:45.729000+00:00",
+   "satellite": "S2B",
+   "mission": "S2",
+   "valid_share": 0.00046595768007893834,
+   "usable": false
+  }
+ ],
+ "bw_any_h": 12.08,
+ "censored_any": false,
+ "first_usable_time": "2020-07-13T12:04:51+00:00",
+ "first_usable_mission": "S1",
+ "bw_s1_h": 12.08,
+ "censored_s1": false,
+ "bw_s2_h": 484.86,
+ "censored_s2": false,
+ "missed": false,
+ "seen_during_flood": true,
+ "seen_near_peak": true
+}

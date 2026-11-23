@@ -1,0 +1,1161 @@
+{
+ "plans": [
+  {
+   "satellite": "S1A",
+   "issued": "2020-05-26T17:00:00+00:00",
+   "valid_to": "2020-06-28T19:00:00+00:00",
+   "member": "S1A_MP_USER_20200526T170000_20200628T190000.kml",
+   "zip_mtime": "2021-05-05T10:26:30+00:00",
+   "n_footprints": 2507,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-05-28T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-07T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-09T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-19T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-21T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-05-29T17:00:00+00:00",
+   "valid_to": "2020-07-01T19:00:00+00:00",
+   "member": "S1A_MP_USER_20200529T170000_20200701T190000.kml",
+   "zip_mtime": "2021-05-05T10:26:32+00:00",
+   "n_footprints": 2512,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-06-07T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-09T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-19T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-21T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-02T17:00:00+00:00",
+   "valid_to": "2020-07-05T19:00:00+00:00",
+   "member": "S1A_MP_USER_20200602T170000_20200705T190000.kml",
+   "zip_mtime": "2021-05-05T10:26:32+00:00",
+   "n_footprints": 2505,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-06-07T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-09T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-19T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-21T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-05T17:00:00+00:00",
+   "valid_to": "2020-07-08T19:00:00+00:00",
+   "member": "S1A_MP_USER_20200605T170000_20200708T190000.kml",
+   "zip_mtime": "2021-05-05T10:26:32+00:00",
+   "n_footprints": 2511,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-06-07T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-09T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-19T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-21T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-09T16:00:00+00:00",
+   "valid_to": "2020-07-12T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200609T160000_20200712T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:32+00:00",
+   "n_footprints": 2565,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-06-09T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-19T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-21T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-12T16:00:00+00:00",
+   "valid_to": "2020-07-15T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200612T160000_20200715T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:32+00:00",
+   "n_footprints": 2570,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-06-19T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-21T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-13T12:03:32+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-16T16:00:00+00:00",
+   "valid_to": "2020-07-17T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200616T160000_20200717T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:32+00:00",
+   "n_footprints": 2400,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-06-19T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-06-21T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-13T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-15T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-19T16:00:00+00:00",
+   "valid_to": "2020-07-22T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200619T160000_20200722T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:32+00:00",
+   "n_footprints": 2567,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-06-21T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-13T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-15T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-23T16:00:00+00:00",
+   "valid_to": "2020-07-26T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200623T160000_20200726T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:32+00:00",
+   "n_footprints": 2574,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-13T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-15T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-26T16:00:00+00:00",
+   "valid_to": "2020-07-29T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200626T160000_20200729T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:34+00:00",
+   "n_footprints": 2588,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-13T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-15T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-27T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-06-30T16:00:00+00:00",
+   "valid_to": "2020-08-02T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200630T160000_20200802T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:34+00:00",
+   "n_footprints": 2583,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-01T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-13T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-15T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-27T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-07-03T16:00:00+00:00",
+   "valid_to": "2020-08-05T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200703T160000_20200805T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:34+00:00",
+   "n_footprints": 2583,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-03T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-13T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-15T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-27T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-07-10T16:00:00+00:00",
+   "valid_to": "2020-08-12T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200710T160000_20200812T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:34+00:00",
+   "n_footprints": 2583,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-13T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-15T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-27T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-06T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-08T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-07-14T16:00:00+00:00",
+   "valid_to": "2020-08-16T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200714T160000_20200816T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:34+00:00",
+   "n_footprints": 2582,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-15T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-27T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-06T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-08T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-07-17T16:00:00+00:00",
+   "valid_to": "2020-08-19T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200717T160000_20200819T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:34+00:00",
+   "n_footprints": 2604,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-27T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-06T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-08T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-18T12:03:32+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-07-21T16:00:00+00:00",
+   "valid_to": "2020-08-10T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200721T160000_20200810T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:36+00:00",
+   "n_footprints": 1567,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-27T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-06T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-08T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-07-24T16:00:00+00:00",
+   "valid_to": "2020-08-13T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200724T160000_20200813T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:36+00:00",
+   "n_footprints": 1563,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-07-25T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-07-27T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-06T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-08T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-07-28T16:00:00+00:00",
+   "valid_to": "2020-08-17T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200728T160000_20200817T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:36+00:00",
+   "n_footprints": 1567,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-08-06T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-08T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-07-31T16:00:00+00:00",
+   "valid_to": "2020-08-20T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200731T160000_20200820T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:36+00:00",
+   "n_footprints": 1577,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-08-06T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-08T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-18T12:03:32+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-08-04T16:00:00+00:00",
+   "valid_to": "2020-08-24T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200804T160000_20200824T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:36+00:00",
+   "n_footprints": 1664,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-08-06T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-08T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-18T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-20T23:50:20+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1A",
+   "issued": "2020-08-11T16:00:00+00:00",
+   "valid_to": "2020-08-31T18:00:00+00:00",
+   "member": "S1A_MP_USER_20200811T160000_20200831T180000.kml",
+   "zip_mtime": "2021-05-05T10:26:36+00:00",
+   "n_footprints": 1683,
+   "passes": [
+    {
+     "satellite": "S1A",
+     "time": "2020-08-18T12:03:32+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-20T23:50:20+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1A",
+     "time": "2020-08-30T12:03:32+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-05-26T17:00:00+00:00",
+   "valid_to": "2020-06-28T19:00:00+00:00",
+   "member": "S1B_MP_USER_20200526T170000_20200628T190000.kml",
+   "zip_mtime": "2021-05-05T10:27:06+00:00",
+   "n_footprints": 2478,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-05-29T17:00:00+00:00",
+   "valid_to": "2020-07-01T19:00:00+00:00",
+   "member": "S1B_MP_USER_20200529T170000_20200701T190000.kml",
+   "zip_mtime": "2021-05-05T10:27:06+00:00",
+   "n_footprints": 2448,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-02T17:00:00+00:00",
+   "valid_to": "2020-07-05T19:00:00+00:00",
+   "member": "S1B_MP_USER_20200602T170000_20200705T190000.kml",
+   "zip_mtime": "2021-05-05T10:27:06+00:00",
+   "n_footprints": 2474,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-05T17:00:00+00:00",
+   "valid_to": "2020-07-08T19:00:00+00:00",
+   "member": "S1B_MP_USER_20200605T170000_20200708T190000.kml",
+   "zip_mtime": "2021-05-05T10:27:08+00:00",
+   "n_footprints": 2472,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-09T16:00:00+00:00",
+   "valid_to": "2020-07-12T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200609T160000_20200712T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:08+00:00",
+   "n_footprints": 2512,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-12T16:00:00+00:00",
+   "valid_to": "2020-07-15T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200612T160000_20200715T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:08+00:00",
+   "n_footprints": 2526,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-16T16:00:00+00:00",
+   "valid_to": "2020-07-17T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200616T160000_20200717T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:08+00:00",
+   "n_footprints": 2385,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-19T16:00:00+00:00",
+   "valid_to": "2020-07-22T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200619T160000_20200722T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:08+00:00",
+   "n_footprints": 2534,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-23T16:00:00+00:00",
+   "valid_to": "2020-07-26T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200623T160000_20200726T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:10+00:00",
+   "n_footprints": 2510,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-26T16:00:00+00:00",
+   "valid_to": "2020-07-29T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200626T160000_20200729T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:10+00:00",
+   "n_footprints": 2535,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-06-30T16:00:00+00:00",
+   "valid_to": "2020-08-02T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200630T160000_20200802T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:10+00:00",
+   "n_footprints": 2535,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-03T16:00:00+00:00",
+   "valid_to": "2020-08-05T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200703T160000_20200805T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:10+00:00",
+   "n_footprints": 2451,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-07T16:00:00+00:00",
+   "valid_to": "2020-08-09T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200707T160000_20200809T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:10+00:00",
+   "n_footprints": 2542,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-10T16:00:00+00:00",
+   "valid_to": "2020-08-12T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200710T160000_20200812T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 2520,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-14T16:00:00+00:00",
+   "valid_to": "2020-08-16T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200714T160000_20200816T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 2523,
+   "passes": [
+    {
+     "satellite": "S1B",
+     "time": "2020-07-19T12:03:28+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1B",
+     "time": "2020-07-21T23:54:28+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-17T16:00:00+00:00",
+   "valid_to": "2020-08-19T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200717T160000_20200819T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 2508,
+   "passes": [
+    {
+     "satellite": "S1B",
+     "time": "2020-07-19T12:03:28+00:00",
+     "kind": "sar"
+    },
+    {
+     "satellite": "S1B",
+     "time": "2020-07-21T23:54:28+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-21T16:00:00+00:00",
+   "valid_to": "2020-08-10T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200721T160000_20200810T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 1535,
+   "passes": [
+    {
+     "satellite": "S1B",
+     "time": "2020-07-21T23:54:28+00:00",
+     "kind": "sar"
+    }
+   ]
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-24T16:00:00+00:00",
+   "valid_to": "2020-08-13T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200724T160000_20200813T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 1530,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-28T16:00:00+00:00",
+   "valid_to": "2020-08-17T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200728T160000_20200817T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 1508,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-07-31T16:00:00+00:00",
+   "valid_to": "2020-08-20T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200731T160000_20200820T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 1532,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-08-04T16:00:00+00:00",
+   "valid_to": "2020-08-24T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200804T160000_20200824T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 1606,
+   "passes": []
+  },
+  {
+   "satellite": "S1B",
+   "issued": "2020-08-11T16:00:00+00:00",
+   "valid_to": "2020-08-31T18:00:00+00:00",
+   "member": "S1B_MP_USER_20200811T160000_20200831T180000.kml",
+   "zip_mtime": "2021-05-05T10:27:12+00:00",
+   "n_footprints": 1601,
+   "passes": []
+  },
+  {
+   "satellite": "S2A",
+   "issued": "2020-06-04T12:00:00+00:00",
+   "valid_to": "2020-06-22T15:00:00+00:00",
+   "member": "S2A_MP_ACQ__KML_20200604T120000_20200622T150000.kml",
+   "zip_mtime": "2021-05-05T11:02:58+00:00",
+   "n_footprints": 795,
+   "passes": [
+    {
+     "satellite": "S2A",
+     "time": "2020-06-08T04:36:55.898000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2A",
+     "time": "2020-06-18T04:36:55.898000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2A",
+   "issued": "2020-06-18T12:00:00+00:00",
+   "valid_to": "2020-07-06T15:00:00+00:00",
+   "member": "S2A_MP_ACQ__KML_20200618T120000_20200706T150000.kml",
+   "zip_mtime": "2021-05-05T11:02:58+00:00",
+   "n_footprints": 787,
+   "passes": [
+    {
+     "satellite": "S2A",
+     "time": "2020-06-28T04:36:55.898000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2A",
+   "issued": "2020-07-02T12:00:00+00:00",
+   "valid_to": "2020-07-20T15:00:00+00:00",
+   "member": "S2A_MP_ACQ__KML_20200702T120000_20200720T150000.kml",
+   "zip_mtime": "2021-05-05T11:02:58+00:00",
+   "n_footprints": 795,
+   "passes": [
+    {
+     "satellite": "S2A",
+     "time": "2020-07-08T04:36:55.898000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2A",
+     "time": "2020-07-18T04:36:55.898000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2A",
+   "issued": "2020-07-16T12:00:00+00:00",
+   "valid_to": "2020-08-03T15:00:00+00:00",
+   "member": "S2A_MP_ACQ__KML_20200716T120000_20200803T150000.kml",
+   "zip_mtime": "2021-05-05T11:02:58+00:00",
+   "n_footprints": 806,
+   "passes": [
+    {
+     "satellite": "S2A",
+     "time": "2020-07-18T04:36:55.898000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2A",
+     "time": "2020-07-28T04:36:55.898000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2A",
+   "issued": "2020-07-28T12:00:00+00:00",
+   "valid_to": "2020-08-20T15:00:00+00:00",
+   "member": "S2A_MP_ACQ__KML_20200728T120000_20200820T150000.kml",
+   "zip_mtime": "2021-05-05T11:02:58+00:00",
+   "n_footprints": 1027,
+   "passes": [
+    {
+     "satellite": "S2A",
+     "time": "2020-08-07T04:36:55.898000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2A",
+     "time": "2020-08-17T04:36:55.898000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2B",
+   "issued": "2020-05-28T12:00:00+00:00",
+   "valid_to": "2020-06-15T15:00:00+00:00",
+   "member": "S2B_MP_ACQ__KML_20200528T120000_20200615T150000.kml",
+   "zip_mtime": "2021-05-05T11:03:14+00:00",
+   "n_footprints": 785,
+   "passes": [
+    {
+     "satellite": "S2B",
+     "time": "2020-06-03T04:36:53.813000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2B",
+     "time": "2020-06-13T04:36:53.813000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2B",
+   "issued": "2020-06-11T12:00:00+00:00",
+   "valid_to": "2020-06-29T15:00:00+00:00",
+   "member": "S2B_MP_ACQ__KML_20200611T120000_20200629T150000.kml",
+   "zip_mtime": "2021-05-05T11:03:14+00:00",
+   "n_footprints": 782,
+   "passes": [
+    {
+     "satellite": "S2B",
+     "time": "2020-06-13T04:36:53.813000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2B",
+     "time": "2020-06-23T04:36:53.813000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2B",
+   "issued": "2020-06-29T12:00:00+00:00",
+   "valid_to": "2020-07-13T15:00:00+00:00",
+   "member": "S2B_MP_ACQ__KML_20200629T120000_20200713T150000.kml",
+   "zip_mtime": "2021-05-05T11:03:14+00:00",
+   "n_footprints": 621,
+   "passes": [
+    {
+     "satellite": "S2B",
+     "time": "2020-07-03T04:36:53.813000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2B",
+     "time": "2020-07-13T04:36:53.813000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2B",
+   "issued": "2020-07-09T12:00:00+00:00",
+   "valid_to": "2020-07-27T15:00:00+00:00",
+   "member": "S2B_MP_ACQ__KML_20200709T120000_20200727T150000.kml",
+   "zip_mtime": "2021-05-05T11:03:14+00:00",
+   "n_footprints": 796,
+   "passes": [
+    {
+     "satellite": "S2B",
+     "time": "2020-07-13T04:36:53.813000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2B",
+     "time": "2020-07-23T04:36:53.813000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2B",
+   "issued": "2020-07-23T12:00:00+00:00",
+   "valid_to": "2020-08-10T15:00:00+00:00",
+   "member": "S2B_MP_ACQ__KML_20200723T120000_20200810T150000.kml",
+   "zip_mtime": "2021-05-05T11:03:14+00:00",
+   "n_footprints": 803,
+   "passes": [
+    {
+     "satellite": "S2B",
+     "time": "2020-08-02T04:36:53.813000+00:00",
+     "kind": "optical"
+    }
+   ]
+  },
+  {
+   "satellite": "S2B",
+   "issued": "2020-08-06T12:00:00+00:00",
+   "valid_to": "2020-08-24T15:00:00+00:00",
+   "member": "S2B_MP_ACQ__KML_20200806T120000_20200824T150000.kml",
+   "zip_mtime": "2021-05-05T11:03:14+00:00",
+   "n_footprints": 802,
+   "passes": [
+    {
+     "satellite": "S2B",
+     "time": "2020-08-12T04:36:53.813000+00:00",
+     "kind": "optical"
+    },
+    {
+     "satellite": "S2B",
+     "time": "2020-08-22T04:36:53.813000+00:00",
+     "kind": "optical"
+    }
+   ]
+  }
+ ],
+ "sats_present": [
+  "S1A",
+  "S1B",
+  "S2A",
+  "S2B"
+ ]
+}
